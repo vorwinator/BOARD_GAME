@@ -2,35 +2,42 @@
 
 class board extends MainController{
 
-    public string $board;
+    public array $board;
 
-    static function generateNewBoard($tr = 3, $td = 10){
+    function generateNewBoard($tr = 10, $td = 10){
         if($tr < 3) $tr = 3;
         $boardCellId = 0;
-        $board = '<table style="border: black solid 3px; height:500px; width:500px">';
+        $this->board['html'] = '<table style="border: black solid 3px; height:500px; width:500px">';
         for($i = 0; $i < $tr; $i++){
-            $board .= '<tr style="border: black solid 3px;">';
+            $this->board['html'] .= '<tr style="border: black solid 3px;">';
             for($j = 0; $j < $td; $j++){
                 if($i == 0 || $i == $tr-1){
-                    $board .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
+                    $this->board['html'] .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
                     $boardCellId++;
                 }
                 elseif($i != 0 && $i != $tr-1 && ($j == 0 || $j == 1)){
-                    $board .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
+                    $this->board['html'] .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
                     $boardCellId++;
                 }
                 elseif($i==1 && $j==0){
-                    $board .= '<td id="Cell_center" colspan="'. $td-2 .'" style="border: black solid 3px;"></td>';
+                    $this->board['html'] .= '<td id="Cell_center" colspan="'. $td-2 .'" style="border: black solid 3px;"></td>';
                 }
                 else{
-                    $board .= '<td></td>';
+                    $this->board['html'] .= '<td></td>';
                 }
             }
-            $board .= "</tr>";
+            $this->board['html'] .= "</tr>";
         }
 
-        $board .="</table>";
+        $this->board['html'] .="</table>";
 
-        return $board;
+        return $this->board['html'];
+    }
+
+    function generateCell($boardCellId = null){
+        $this->board['html'] .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
+        $this->board['cells'][$boardCellId]['housingPrices'] = generateCellHousingPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['rentPrices'] = generateCellRentPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
     }
 }
