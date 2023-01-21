@@ -2,7 +2,7 @@
 /**
  * @var $board array - contains all of current game board data
  */
-class board extends MainController{
+class Board extends MainController{
 
     public array $board;
 
@@ -38,7 +38,7 @@ class board extends MainController{
     }
 
     function generateCell($boardCellId = null){
-        $this->board['html'] .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
+        $this->board['cells'][$boardCellId]['html'] .= '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);

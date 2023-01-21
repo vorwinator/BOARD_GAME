@@ -8,6 +8,6 @@ class MainController{
     }
 }
 
-$gameBoard = new board;
+$gameBoard = new Board;
 
 echo $gameBoard->generateNewBoard();
