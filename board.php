@@ -2,6 +2,7 @@
 /**
  * @var array $board - contains all of current game board data
  * @var int $square - contains number of rows and columns 
+ * @var int $numberOfBoardCells - contains number of cells on which players move around 
  */
 class Board extends MainController{
 
@@ -9,17 +10,21 @@ class Board extends MainController{
 
     public int $square;
 
+    public int $numberOfBoardCells;
+
     /**
      * @param int $square - contains number of rows and columns
      */
     function generateNewBoard($square = 10){
         if($square < 3) $square = 3;
         $this->square = $square;
+        $this->numberOfBoardCells = $square * 4 - 4;
         $boardCellId = 0;
+
         $this->board['table']['startTable'] = '<table style="border: black solid 3px; height:500px; width:500px">';
-        for($i = 0; $i < $square; $i++){
+        for($i = 0; $i < $square; $i++){//tr
             $this->board['table']['row_'.$i] = '<tr style="border: black solid 3px;">';
-            for($j = 0; $j < $square; $j++){
+            for($j = 0; $j < $square; $j++){//td
                 if($i == 0 || $i == $square-1){//top and boottom
                     $this->generateCell($boardCellId);
                     $boardCellId++;
@@ -42,11 +47,35 @@ class Board extends MainController{
     /**
      * @param int $boardCellId - current cell id
      */
-    function generateCell($boardCellId = null){
+    function generateCell($boardCellId){
         $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
-        // $this->board['cells'][$boardCellId]['housingPrices'] = generateCellHousingPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         // $this->board['cells'][$boardCellId]['rentPrices'] = generateCellRentPrices($boardCellId);
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
+    }
+
+    function generateCellHousingPrices($boardCellId){
+        $lineMultiplier = $this->countLineMultiplier($boardCellId);
+        for($i=0;$i<5;$i++){
+            $housingPrices[] = $this->countHousingPrice($boardCellId, $lineMultiplier, $i+1);
+        }
+        
+        return $housingPrices;
+    }
+
+    function countHousingPrice($boardCellId, $lineMultiplier, $houseMultiplier){
+        $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
+        return $lineMultiplier * $houseMultiplier * $boardCellMultiplier /9;
+    }
+
+    function countLineMultiplier($boardCellId){
+        if($boardCellId < $this->numberOfBoardCells/4) //TODO nested short if not supported in this PHP version
+         return 100 * $this->numberOfBoardCells/4;
+          elseif($boardCellId < $this->numberOfBoardCells/4 * 2)
+           return 100 * $this->numberOfBoardCells/4 * 2;
+            elseif($boardCellId < $this->numberOfBoardCells/4 * 3)
+             return 100 * $this->numberOfBoardCells/4 * 3;
+              else return 100 * $this->numberOfBoardCells;
     }
 
     /**
@@ -55,9 +84,9 @@ class Board extends MainController{
     function refreshBoard(){
         $boardCellId = 0;
         $this->board['html'] = $this->board['table']['startTable'];
-        for($i = 0; $i < $this->square; $i++){
+        for($i = 0; $i < $this->square; $i++){//tr
             $this->board['html'] .= $this->board['table']['row_'.$i];
-            for($j = 0; $j < $this->square; $j++){
+            for($j = 0; $j < $this->square; $j++){//td
                 if($i == 0 || $i == $this->square-1){//top and boottom
                    $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
                     $boardCellId++;
