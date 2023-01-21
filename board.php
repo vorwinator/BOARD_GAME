@@ -8,34 +8,34 @@ class Board extends MainController{
 
     public array $board;
 
-    public int $square;
+    public int $square = 10;
 
-    public int $numberOfBoardCells;
+    public int $numberOfBoardCells = 36;
+
+    public string $gameType = 'standard'; //base for custom gameplays
 
     /**
      * Generates new board for new game - should be run only once at the beginning of the game
      * @param int $square - contains number of rows and columns
      */
-    function generateNewBoard($square = 10){
-        if($square < 3) $square = 3;
-        $this->square = $square;
-        $this->numberOfBoardCells = $square * 4 - 4;
+    function generateNewBoard(){
+        if($this->square < 3) $this->square = 3;
         $boardCellId = 0;
 
         $this->board['table']['startTable'] = '<table style="border: black solid 3px; height:500px; width:500px">';
-        for($i = 0; $i < $square; $i++){//tr
+        for($i = 0; $i < $this->square; $i++){//tr
             $this->board['table']['row_'.$i] = '<tr style="border: black solid 3px;">';
-            for($j = 0; $j < $square; $j++){//td
-                if($i == 0 || $i == $square-1){//top and boottom
+            for($j = 0; $j < $this->square; $j++){//td
+                if($i == 0 || $i == $this->square-1){//top and boottom
                     $this->generateCell($boardCellId);
                     $boardCellId++;
                 }
-                elseif($i != 0 && $i != $square-1 && ($j == 0 || $j == 1)){//left and right
+                elseif($i != 0 && $i != $this->square-1 && ($j == 0 || $j == 1)){//left and right
                     $this->generateCell($boardCellId);
                     $boardCellId++;
 
                     if($i==1 && $j==0){//center
-                        $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $square-2 .'" rowspan="'. $square-2 .'" style="border: black solid 3px;"></td>';
+                        $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'" style="border: black solid 3px;"></td>';
                     }
                 }
             }
