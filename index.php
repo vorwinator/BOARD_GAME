@@ -1,5 +1,5 @@
 <?php
-require_once("./board.php");
+require_once("./Board.php");
 
 class MainController{
     function __construct()
