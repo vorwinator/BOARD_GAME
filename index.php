@@ -10,4 +10,6 @@ class MainController{
 
 $gameBoard = new Board;
 
-echo $gameBoard->generateNewBoard();
+$gameBoard->generateNewBoard();
+
+$gameBoard->printBoard();
