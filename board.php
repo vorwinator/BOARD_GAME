@@ -52,8 +52,31 @@ class Board extends MainController{
     function generateCell($boardCellId){
         $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
-        // $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
+    }
+
+    /**
+     * generates rent prices for single cell
+     * @param int $boardCellId - current cell id
+     */
+    function generateCellRentPrices($boardCellId){
+        $lineMultiplier = $this->countLineMultiplier($boardCellId);
+        for($i=0;$i<5;$i++){
+            $rentPrices[] = $this->countRentPrice($boardCellId, $lineMultiplier, $i+1);
+        }
+
+        return $rentPrices;
+    }
+
+    /**
+     * @param int $boardCellId - current cell id
+     * @param int $lineMultiplier - multiplier from section of the board game (left/top/right/down)
+     * @param int $houseMultiplier - multiplier from house level
+     */
+    function countRentPrice($boardCellId, $lineMultiplier, $houseMultiplier){
+        $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
+        return $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
     }
 
     /**
