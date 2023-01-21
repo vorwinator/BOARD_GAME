@@ -54,7 +54,7 @@ class Board extends MainController{
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['owner'] = "bank";
-        $this->board['cells'][$boardCellId]['houseLevel'] = -1;
+        $this->board['cells'][$boardCellId]['houseLevel'] = 0;
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
     }
 
@@ -64,8 +64,8 @@ class Board extends MainController{
      */
     function generateCellRentPrices($boardCellId){
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
-        for($i=0;$i<5;$i++){
-            $rentPrices[] = $this->countRentPrice($boardCellId, $lineMultiplier, $i+1);
+        for($i=0;$i<6;$i++){
+            $rentPrices[$i] = $this->countRentPrice($boardCellId, $lineMultiplier, $i);
         }
 
         return $rentPrices;
@@ -78,7 +78,10 @@ class Board extends MainController{
      */
     function countRentPrice($boardCellId, $lineMultiplier, $houseMultiplier){
         $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
-        return $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
+        return 
+        $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90 == 0?
+            $lineMultiplier * $boardCellMultiplier /180:
+                $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
     }
 
     /**
@@ -87,8 +90,8 @@ class Board extends MainController{
      */
     function generateCellHousingPrices($boardCellId){
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
-        for($i=0;$i<5;$i++){
-            $housingPrices[] = $this->countHousingPrice($boardCellId, $lineMultiplier, $i+1);
+        for($i=1;$i<6;$i++){
+            $housingPrices[$i] = $this->countHousingPrice($boardCellId, $lineMultiplier, $i);
         }
         
         return $housingPrices;
