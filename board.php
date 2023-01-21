@@ -53,6 +53,8 @@ class Board extends MainController{
         $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['owner'] = "bank";
+        $this->board['cells'][$boardCellId]['houseLevel'] = -1;
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
     }
 
