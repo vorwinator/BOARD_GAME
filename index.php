@@ -1,5 +1,6 @@
 <?php
 require_once("./Board.php");
+require_once("./Player.php");
 
 class MainController{
     function __construct()
@@ -9,6 +10,8 @@ class MainController{
 }
 
 $gameBoard = new Board;
+
+$player_1 = new Player;
 
 $gameBoard->generateNewBoard();
 
