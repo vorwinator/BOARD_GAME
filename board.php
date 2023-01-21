@@ -53,9 +53,20 @@ class Board extends MainController{
         $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
+        $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
         $this->board['cells'][$boardCellId]['owner'] = "bank";
         $this->board['cells'][$boardCellId]['houseLevel'] = 0;
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
+    }
+
+    /**
+     * generates purchase price for single cell
+     * @param int $boardCellId - current cell id
+     */
+    function generatePurchasePrice($boardCellId){
+        $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
+        $lineMultiplier = $this->countLineMultiplier($boardCellId);
+        return $lineMultiplier * $boardCellMultiplier /90 * 100;
     }
 
     /**
