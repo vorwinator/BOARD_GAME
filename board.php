@@ -13,6 +13,7 @@ class Board extends MainController{
     public int $numberOfBoardCells;
 
     /**
+     * Generates new board for new game - should be run only once at the beginning of the game
      * @param int $square - contains number of rows and columns
      */
     function generateNewBoard($square = 10){
@@ -45,15 +46,20 @@ class Board extends MainController{
     }
 
     /**
+     * generate general data for single cell
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
         $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
-        // $this->board['cells'][$boardCellId]['rentPrices'] = generateCellRentPrices($boardCellId);
+        // $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
     }
 
+    /**
+     * generates housing prices for single cell
+     * @param int $boardCellId - current cell id
+     */
     function generateCellHousingPrices($boardCellId){
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
         for($i=0;$i<5;$i++){
@@ -63,11 +69,19 @@ class Board extends MainController{
         return $housingPrices;
     }
 
+    /**
+     * @param int $boardCellId - current cell id
+     * @param int $lineMultiplier - multiplier from section of the board game (left/top/right/down)
+     * @param int $houseMultiplier - multiplier from house level
+     */
     function countHousingPrice($boardCellId, $lineMultiplier, $houseMultiplier){
         $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
         return $lineMultiplier * $houseMultiplier * $boardCellMultiplier /9;
     }
 
+    /**
+     * @param int $boardCellId - current cell id
+     */
     function countLineMultiplier($boardCellId){
         if($boardCellId < $this->numberOfBoardCells/4) //TODO nested short if not supported in this PHP version
          return 100 * $this->numberOfBoardCells/4;
@@ -79,7 +93,7 @@ class Board extends MainController{
     }
 
     /**
-     * Refreshes board on every change
+     * Refreshes board['html']
      */
     function refreshBoard(){
         $boardCellId = 0;
@@ -104,6 +118,10 @@ class Board extends MainController{
         }
         $this->board['html'] .= $this->board['table']['endTable'];
     }
+
+    /**
+     * show board for user
+     */
     function printBoard(){
         $this->refreshBoard();
         echo $this->board['html'];
