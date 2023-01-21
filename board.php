@@ -108,11 +108,14 @@ class Board extends MainController{
     function countLineMultiplier($boardCellId){
         if($boardCellId < $this->numberOfBoardCells/4) //TODO nested short if not supported in this PHP version
          return 100 * $this->numberOfBoardCells/4;
+
           elseif($boardCellId < $this->numberOfBoardCells/4 * 2)
-           return 100 * $this->numberOfBoardCells/4 * 2;
+           return 100 * $this->numberOfBoardCells/4 * 1.2;
+
             elseif($boardCellId < $this->numberOfBoardCells/4 * 3)
-             return 100 * $this->numberOfBoardCells/4 * 3;
-              else return 100 * $this->numberOfBoardCells;
+             return 100 * $this->numberOfBoardCells/4 * 1.4;
+             
+              else return 100 * $this->numberOfBoardCells/4 * 1.6;
     }
 
     /**
