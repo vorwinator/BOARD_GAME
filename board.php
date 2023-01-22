@@ -22,9 +22,9 @@ class Board extends MainController{
         if($this->square < 3) $this->square = 3;
         $boardCellId = 0;
 
-        $this->board['table']['startTable'] = '<table style="border: black solid 3px; height:500px; width:500px">';
+        $this->board['table']['startTable'] = '<table class="board">';
         for($i = 0; $i < $this->square; $i++){//tr
-            $this->board['table']['row_'.$i] = '<tr style="border: black solid 3px;">';
+            $this->board['table']['row_'.$i] = '<tr class="tr">';
             for($j = 0; $j < $this->square; $j++){//td
                 if($i == 0 || $i == $this->square-1){//top and boottom
                     $this->generateCell($boardCellId);
@@ -35,7 +35,7 @@ class Board extends MainController{
                     $boardCellId++;
 
                     if($i==1 && $j==0){//center
-                        $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'" style="border: black solid 3px;"></td>';
+                        $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'"></td>';
                     }
                 }
             }
@@ -50,7 +50,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
-        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" style="border: black solid 3px;"></td>';
+        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
@@ -83,19 +83,6 @@ class Board extends MainController{
     }
 
     /**
-     * @param int $boardCellId - current cell id
-     * @param int $lineMultiplier - multiplier from section of the board game (left/top/right/down)
-     * @param int $houseMultiplier - multiplier from house level
-     */
-    function countRentPrice($boardCellId, $lineMultiplier, $houseMultiplier){
-        $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
-        return 
-        $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90 == 0?
-            $lineMultiplier * $boardCellMultiplier /180:
-                $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
-    }
-
-    /**
      * generates housing prices for single cell
      * @param int $boardCellId - current cell id
      */
@@ -106,6 +93,19 @@ class Board extends MainController{
         }
         
         return $housingPrices;
+    }
+
+    /**
+     * @param int $boardCellId - current cell id
+     * @param int $lineMultiplier - multiplier from section of the board game (left/top/right/down)
+     * @param int $houseMultiplier - multiplier from house level
+     */
+    function countRentPrice($boardCellId, $lineMultiplier, $houseMultiplier){
+        $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
+        return 
+        $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90 == 0?
+            $lineMultiplier * $boardCellMultiplier /180:
+                $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
     }
 
     /**
@@ -132,6 +132,24 @@ class Board extends MainController{
              return 100 * $this->numberOfBoardCells/4 * 1.4;
              
               else return 100 * $this->numberOfBoardCells/4 * 1.6;
+    }
+
+    /**
+     * @param int $boardCellId - current cell id
+     * @param string $newContent - content that will be added to the cell
+     * @param string $mode - determines what kind of modification will happen
+     */
+    function modifyCellContent($boardCellId, $modification, $mode){
+        switch($mode){
+            case 'insert':
+                $html = explode("</td>", $this->board['cells'][$boardCellId]['html']);
+                $this->board['cells'][$boardCellId]['html'] = $html[0].$modification.'</td>';
+                break;
+            case 'remove':
+                $html = explode($modification, $this->board['cells'][$boardCellId]['html']);
+                $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
+                break;
+        }
     }
 
     /**

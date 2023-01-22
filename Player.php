@@ -11,7 +11,9 @@ class Player extends MainController{
 
     public float $accountBalance;
 
-    public string $pawn;
+    public string $pawn = '<span style="display: table-cell">&#x2022;</span>';
+
+    public int $currentPosition = 0;
 
     function generateNewPlayer($numberOfBoardCells){
         $this->accountBalance = $this->countAccountBalance($numberOfBoardCells);
