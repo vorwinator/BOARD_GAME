@@ -64,7 +64,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
-        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell"></td>';
+        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup('.$boardCellId.');"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
@@ -164,6 +164,54 @@ class Board extends MainController{
                 $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
                 break;
         }
+    }
+
+    function cellDetailsHTML($boardCellId){
+        $html = '<span class="close" onclick="closePopup();">&times;</span>';
+        $html .= "<div>";
+            $html .= "<h1>";
+            // $html .= $this->board['cells'][$boardCellId]['name']; //TODO
+            $html .= " - ";
+            $html .= $this->board['cells'][$boardCellId]['owner'];
+            $html .= "</h1>";
+
+            $html .= "<h2>";
+            $html .= "Purchase price: ";
+            $html .= $this->board['cells'][$boardCellId]['purchasePrice'];
+            $html .= "</h2>";
+
+            $html .= "<h2>";
+            $html .= "Rent prices:";
+            $html .= "</h2>";
+            $html .= '<div class="subListPopup">';
+            foreach($this->board['cells'][$boardCellId]['rentPrices'] as $key=>$price){
+                if($key == $this->board['cells'][$boardCellId]['houseLevel']){
+                    $html .= '<b>';
+                    $html .= $key.' => '.$price;
+                    $html .= '</b><br>';
+                }
+                else
+                    $html .= $key.' => '.$price.'<br>';
+            }
+            $html .= "</div>";
+
+            $html .= "<h2>";
+            $html .= "Housing prices:";
+            $html .= "</h2>";
+            $html .= '<div class="subListPopup">';
+            foreach($this->board['cells'][$boardCellId]['housingPrices'] as $key=>$price){
+                if($key == $this->board['cells'][$boardCellId]['houseLevel']){
+                    $html .= '<b>';
+                    $html .= $key.' => '.$price;
+                    $html .= '</b><br>';
+                }
+                else
+                    $html .= $key.' => '.$price.'<br>';
+            }
+            $html .= "</div>";
+
+        $html .= "</div>";
+        return $html;
     }
 
     /**

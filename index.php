@@ -3,7 +3,6 @@ require_once("./Board.php");
 require_once("./Player.php");
 require_once("./Utils.php");
 
-
 session_start();
 if(isset($_SESSION['main'])){
     $main = $_SESSION['main'];
@@ -25,6 +24,13 @@ else{
 if($_REQUEST){
     foreach($_REQUEST as $key=>$val){
         switch($key){
+            case 'ajaxCall':
+                switch($_REQUEST['ajaxCall']){
+                  case 'getCellDetails':
+                    echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId']);
+                    exit();
+                }
+                break;
             case 'resetGame':
                 session_destroy();
                 header('Location: ./index.php');
@@ -53,6 +59,8 @@ class MainController{
 <html>
 <head>
     <link rel="stylesheet" href="./board.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript" src="./utils.js"></script>
 </head>
 <body>
     <a href="./index.php">TEST</a>
@@ -68,7 +76,15 @@ foreach($objNames as $key=>$objName){
 }
 $_SESSION['main'] = $main;
 ?>
-    
+
+
+
+
+<div id="popup" class="popup">
+  <div id="popupContent" class="popupContent">
+  </div>
+</div>
+
 </body>
 
 
