@@ -21,6 +21,7 @@ class Board extends MainController{
     function generateNewBoard(){
         if($this->square < 3) $this->square = 3;
         $boardCellId = 0;
+        $leftLine = 1;
 
         $this->board['table']['startTable'] = '<table class="board">';
         for($i = 0; $i < $this->square; $i++){//tr
@@ -31,8 +32,14 @@ class Board extends MainController{
                     $boardCellId++;
                 }
                 elseif($i != 0 && $i != $this->square-1 && ($j == 0 || $j == 1)){//left and right
-                    $this->generateCell($boardCellId);
-                    $boardCellId++;
+                    if($j == 0){
+                        $this->generateCell($this->numberOfBoardCells - $leftLine);
+                        $leftLine++;
+                    }
+                    else{
+                        $this->generateCell($boardCellId);
+                        $boardCellId++;
+                    }
 
                     if($i==1 && $j==0){//center
                         $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'"></td>';
@@ -157,6 +164,7 @@ class Board extends MainController{
      */
     function refreshBoard(){
         $boardCellId = 0;
+        $leftLine = 1;
         $this->board['html'] = $this->board['table']['startTable'];
         for($i = 0; $i < $this->square; $i++){//tr
             $this->board['html'] .= $this->board['table']['row_'.$i];
@@ -166,8 +174,14 @@ class Board extends MainController{
                     $boardCellId++;
                 }
                 elseif($i != 0 && $i != $this->square-1 && ($j == 0 || $j == 1)){//left and right
-                    $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
-                    $boardCellId++;
+                    if($j == 0){
+                        $this->board['html'] .= $this->board['cells'][$this->numberOfBoardCells - $leftLine]['html'];
+                        $leftLine++;
+                    }
+                    else{
+                        $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
+                        $boardCellId++;
+                    }
 
                     if($i==1 && $j==0){//center
                         $this->board['html'] .= $this->board['table']['center'];
