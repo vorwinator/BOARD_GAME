@@ -17,4 +17,11 @@ class Utils{
         
         return $rollResult;
     }
+
+    static function countNextPosition($rollResult, $numberOfBoardCells, $currentPosition){
+        return 
+        $currentPosition + array_sum($rollResult) < $numberOfBoardCells? 
+            $currentPosition + array_sum($rollResult): 
+                $currentPosition + array_sum($rollResult) - $numberOfBoardCells;
+    }
 }

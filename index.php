@@ -32,7 +32,7 @@ if($_REQUEST){
             case 'rollDice':
                 $rollResult = Utils::rollDice($val);
                 $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'remove');
-                $player_1->currentPosition += array_sum($rollResult); 
+                $player_1->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $player_1->currentPosition); 
                 $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insert');
                 break;
         }
