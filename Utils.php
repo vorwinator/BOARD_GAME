@@ -9,4 +9,12 @@ class Utils{
 
         return $objNames;
     }
+
+    static function rollDice($numberOfDices){
+        for($i=0;$i<$numberOfDices;$i++){
+            $rollResult[] = rand(1,6);
+        }
+        
+        return $rollResult;
+    }
 }

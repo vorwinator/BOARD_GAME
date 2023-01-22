@@ -16,8 +16,27 @@ else{
     $main = new MainController;
 
     $main->objects['gameBoard'] = $gameBoard = new Board;
+    $gameBoard->generateNewBoard();
     
     $main->objects['player_1'] = $player_1 = new Player;
+    $gameBoard->modifyCellContent(0, $player_1->pawn, 'insert');
+}
+
+if($_REQUEST){
+    foreach($_REQUEST as $key=>$val){
+        switch($key){
+            case 'resetGame':
+                session_destroy();
+                header('Location: ./index.php');
+                break;
+            case 'rollDice':
+                $rollResult = Utils::rollDice($val);
+                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'remove');
+                $player_1->currentPosition += array_sum($rollResult); 
+                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insert');
+                break;
+        }
+    }
 }
 
 class MainController{
@@ -37,11 +56,9 @@ class MainController{
 </head>
 <body>
     <a href="./index.php">TEST</a>
+    <a href="./index.php?rollDice=2">ROLL</a>
+    <a href="./index.php?resetGame=2">RESET</a>
 <?php
-
-$gameBoard->generateNewBoard();
-$gameBoard->modifyCellContent(0, $player_1->pawn, 'insert');
-
 $gameBoard->printBoard();
 
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);

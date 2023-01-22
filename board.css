@@ -16,6 +16,11 @@
     border: black solid 3px;
 }
 
+.pawn{
+    color: red;
+    padding: 45%;
+}
+
 #Cell_center{
     border: black solid 3px;
 }
