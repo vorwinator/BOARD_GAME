@@ -21,22 +21,29 @@ class Board extends MainController{
     function generateNewBoard(){
         if($this->square < 3) $this->square = 3;
         $boardCellId = 0;
-        $leftLine = 1;
+        $leftLine = $this->numberOfBoardCells-1;
+        $bottomLine = 3*$this->square-3;
 
         $this->board['table']['startTable'] = '<table class="board">';
         for($i = 0; $i < $this->square; $i++){//tr
             $this->board['table']['row_'.$i] = '<tr class="tr">';
             for($j = 0; $j < $this->square; $j++){//td
                 if($i == 0 || $i == $this->square-1){//top and boottom
-                    $this->generateCell($boardCellId);
-                    $boardCellId++;
+                    if($i == $this->square-1){//bottom
+                        $this->generateCell($bottomLine);
+                        $bottomLine--;
+                    }
+                    else{//top
+                        $this->generateCell($boardCellId);
+                        $boardCellId++;
+                    }
                 }
                 elseif($i != 0 && $i != $this->square-1 && ($j == 0 || $j == 1)){//left and right
-                    if($j == 0){
-                        $this->generateCell($this->numberOfBoardCells - $leftLine);
-                        $leftLine++;
+                    if($j == 0){//left
+                        $this->generateCell($leftLine);
+                        $leftLine--;
                     }
-                    else{
+                    else{//right
                         $this->generateCell($boardCellId);
                         $boardCellId++;
                     }
@@ -164,19 +171,27 @@ class Board extends MainController{
      */
     function refreshBoard(){
         $boardCellId = 0;
-        $leftLine = 1;
+        $leftLine = $this->numberOfBoardCells-1;
+        $bottomLine = 3*$this->square-3;
+
         $this->board['html'] = $this->board['table']['startTable'];
         for($i = 0; $i < $this->square; $i++){//tr
             $this->board['html'] .= $this->board['table']['row_'.$i];
             for($j = 0; $j < $this->square; $j++){//td
                 if($i == 0 || $i == $this->square-1){//top and boottom
-                   $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
-                    $boardCellId++;
+                    if($i == $this->square-1){//bottom
+                        $this->board['html'] .= $this->board['cells'][$bottomLine]['html'];
+                        $bottomLine--;
+                    }
+                    else{//top
+                        $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
+                        $boardCellId++;
+                    }
                 }
                 elseif($i != 0 && $i != $this->square-1 && ($j == 0 || $j == 1)){//left and right
                     if($j == 0){
-                        $this->board['html'] .= $this->board['cells'][$this->numberOfBoardCells - $leftLine]['html'];
-                        $leftLine++;
+                        $this->board['html'] .= $this->board['cells'][$leftLine]['html'];
+                        $leftLine--;
                     }
                     else{
                         $this->board['html'] .= $this->board['cells'][$boardCellId]['html'];
