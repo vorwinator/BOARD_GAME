@@ -18,7 +18,8 @@
 
 .pawn{
     color: red;
-    padding: 45%;
+    margin: 45%;
+    font-size: 50px;
 }
 
 #Cell_center{
