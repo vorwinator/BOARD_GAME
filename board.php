@@ -64,7 +64,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
-        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup('.$boardCellId.');"></td>';
+        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
@@ -211,6 +211,62 @@ class Board extends MainController{
             $html .= "</div>";
 
         $html .= "</div>";
+        return $html;
+    }
+
+    function prepareDiceHTML($numberOfDices){
+        $html = "";
+        for($i=0;$i<$numberOfDices;$i++){
+            $html .= "
+            <div class='dice' id='dice_".$i."'>
+                <div class='diceOne'>
+                    <div class='dot'></div>
+                </div>
+                <div class='diceTwo'>
+                    <div class='dot'></div>
+                    <div class='dot'></div>
+                </div>
+                <div class='diceThree'>
+                    <div class='dot'></div>
+                    <div class='dot'></div>
+                    <div class='dot'></div>
+                </div>
+                <div class='diceFour'>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                </div>
+                <div class='diceFive'>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                    <div class='dot'></div>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                </div>
+                <div class='diceSix'>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                    <div class='column'>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                        <div class='dot'></div>
+                    </div>
+                </div>
+            </div>
+            ";
+        }
         return $html;
     }
 

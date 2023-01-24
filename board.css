@@ -62,6 +62,142 @@
     margin-left: 40px;
 }
 
+.dice{
+    margin-left: 500px; /*temporary*/
+    width:200px;
+    height:200px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translateZ(-100px) rotateY(-45deg) rotateX(-45deg);
+    transition: transform 1s;
+}
+
+.diceOne{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transform: rotateX(-90deg) translateZ(100px);
+    z-index: 1;
+}
+
+.diceTwo{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:space-between;
+    transform: rotateY(180deg) translateZ(100px);
+    z-index: 2;
+}
+
+.diceTwo .dot:nth-of-type(2) {
+    align-self: flex-end;
+}
+
+.diceThree{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:space-between;
+    transform: rotateY(90deg) translateZ(100px);
+    z-index: 3;
+}
+
+.diceThree .dot:nth-of-type(2) {
+    align-self: center;
+}
+
+.diceThree .dot:nth-of-type(3) {
+    align-self: flex-end;
+}
+
+.diceFour{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:space-between;
+    transform: rotateY(0deg) translateZ(100px);
+    z-index: 4;
+}
+
+.diceFour .column{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.diceFive{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:space-between;
+    transform: rotateY(-90deg) translateZ(100px);
+    z-index: 5;
+}
+
+.diceFive .column{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.diceFive .dot:nth-of-type(2) {
+    align-self: center;
+}
+
+.diceSix{
+    position: absolute;
+    width:200px;
+    height:200px;
+    background-color:black;
+    border-radius:10%;
+    
+    display:flex;
+    justify-content:space-between;
+    transform: rotateX(90deg) translateZ(100px);
+    z-index: 6;
+}
+
+.diceSix .column{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.dot{
+    width:20px;
+    height:20px;
+    margin:20px;
+    background-color:orange;
+    border-radius:15px;
+    display:block;
+}
+
+.popupDices{
+    display:flex;
+}
+
 #Cell_center{
     border: black solid 3px;
 }

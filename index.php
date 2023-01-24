@@ -26,9 +26,13 @@ if($_REQUEST){
         switch($key){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
-                  case 'getCellDetails':
-                    echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId']);
-                    exit();
+                    case 'getCellDetails':
+                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId']);
+                        exit();
+                    case 'getRollDice':
+                        $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
+                        echo $data;
+                        exit();
                 }
                 break;
             case 'resetGame':
@@ -36,7 +40,7 @@ if($_REQUEST){
                 header('Location: ./index.php');
                 break;
             case 'rollDice':
-                $rollResult = Utils::rollDice($val);
+                $rollResult = array_sum(explode(',',$_REQUEST['rollDice']));
                 $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'remove');
                 $player_1->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $player_1->currentPosition); 
                 $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insert');
@@ -64,7 +68,8 @@ class MainController{
 </head>
 <body>
     <a href="./index.php">TEST</a>
-    <a href="./index.php?rollDice=2">ROLL</a>
+    <!-- <a href="./index.php?rollDice=2" onclick='showPopup("rollDice",2)'>ROLL</a> -->
+    <button onclick='showPopup("rollDice",2)'>ROLL</button>
     <a href="./index.php?resetGame=2">RESET</a>
 <?php
 $gameBoard->printBoard();
@@ -76,9 +81,6 @@ foreach($objNames as $key=>$objName){
 }
 $_SESSION['main'] = $main;
 ?>
-
-
-
 
 <div id="popup" class="popup">
   <div id="popupContent" class="popupContent">
