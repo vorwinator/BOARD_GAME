@@ -80,7 +80,7 @@ class Board extends MainController{
     function generatePurchasePrice($boardCellId){
         $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
-        return $lineMultiplier * $boardCellMultiplier /90 * 100;
+        return $lineMultiplier * $boardCellMultiplier /90 * 5;
     }
 
     /**
