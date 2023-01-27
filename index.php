@@ -29,10 +29,10 @@ if($_REQUEST){
         switch($key){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
-                    case 'getCellDetails':
+                    case 'showCellDetails':
                         echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId']);
                         exit();
-                    case 'getRollDice':
+                    case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
                         echo $data;
                         exit();

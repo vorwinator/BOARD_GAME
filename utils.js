@@ -4,10 +4,10 @@ function showPopup(popupType, data) {
     var popupContent = document.getElementById("popupContent");
     switch (popupType) {
         case 'cellDetails':
-            getCellDetails(data, popupContent, popup);
+            showCellDetails(data, popupContent, popup);
             break;
         case 'rollDice':
-            getRollDice(data, popupContent, popup);
+            showRollDice(data, popupContent, popup);
             break;
         case 'startNewGame':
             showStartNewGame(popupContent, popup);
@@ -25,9 +25,9 @@ function showStartNewGame(popupContent, popup) {
     })
 }
 
-function getCellDetails(boardCellId, popupContent, popup) {
+function showCellDetails(boardCellId, popupContent, popup) {
     jQuery.ajax({
-        url: './index.php?ajaxCall=getCellDetails&boardCellId=' + boardCellId,
+        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId,
         success: function (data) {
             popupContent.innerHTML = data;
             popup.style.display = "block";
@@ -35,9 +35,9 @@ function getCellDetails(boardCellId, popupContent, popup) {
     })
 }
 
-async function getRollDice(numberOfDices, popupContent, popup) {
+async function showRollDice(numberOfDices, popupContent, popup) {
     jQuery.ajax({
-        url: './index.php?ajaxCall=getRollDice&numberOfDices=' + numberOfDices,
+        url: './index.php?ajaxCall=showRollDice&numberOfDices=' + numberOfDices,
         success: function (data) {
             popupContent.innerHTML = '<div class="popupDices">' + data + '</div>';
             jQuery(".popupContent").css("background", (255, 255, 255, 0));
