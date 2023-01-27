@@ -20,7 +20,7 @@ else{
     for($i=1;$i<=$_REQUEST["numberOfPlayers"];$i++){
         $playerName = "player_".$i;
         $main->objects[$playerName] = $$playerName = new Player;
-        $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insert');
+        $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insertPlayerPawn');
     }
 }
 
@@ -49,7 +49,7 @@ if($_REQUEST){
                 $rollResult = array_sum(explode(',',$_REQUEST['rollDice']));
                 $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'remove');
                 $player_1->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $player_1->currentPosition); 
-                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insert');
+                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insertPlayerPawn');
                 break;
         }
     }

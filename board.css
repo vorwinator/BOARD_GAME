@@ -18,8 +18,17 @@
 
 .pawn{
     color: red;
-    margin: 45%;
     font-size: 50px;
+    margin:auto;
+    height: 25px;
+    margin-top: -20px;
+}
+
+.cellPawns{
+    height:100%;
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .popup {

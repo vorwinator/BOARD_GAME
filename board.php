@@ -64,7 +64,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
-        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"></td>';
+        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"><div class="cellPawns"></div></td>';
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
@@ -155,9 +155,9 @@ class Board extends MainController{
      */
     function modifyCellContent($boardCellId, $modification, $mode){
         switch($mode){
-            case 'insert':
-                $html = explode("</td>", $this->board['cells'][$boardCellId]['html']);
-                $this->board['cells'][$boardCellId]['html'] = $html[0].$modification.'</td>';
+            case 'insertPlayerPawn':
+                $html = explode('<div class="cellPawns">', $this->board['cells'][$boardCellId]['html']);
+                $this->board['cells'][$boardCellId]['html'] = $html[0].'<div class="cellPawns">'.$modification.$html[1];
                 break;
             case 'remove':
                 $html = explode($modification, $this->board['cells'][$boardCellId]['html']);
