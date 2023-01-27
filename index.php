@@ -4,7 +4,7 @@ require_once("./Player.php");
 require_once("./Utils.php");
 
 session_start();
-if(isset($_SESSION['main'])){
+if(isset($_SESSION['main']) && !isset($_REQUEST["submitNewGame"])){
     $main = $_SESSION['main'];
 
     foreach($main->objects as $objName=>$obj){
@@ -17,8 +17,11 @@ else{
     $main->objects['gameBoard'] = $gameBoard = new Board;
     $gameBoard->generateNewBoard();
     
-    $main->objects['player_1'] = $player_1 = new Player;
-    $gameBoard->modifyCellContent(0, $player_1->pawn, 'insert');
+    for($i=1;$i<=$_REQUEST["numberOfPlayers"];$i++){
+        $playerName = "player_".$i;
+        $main->objects[$playerName] = $$playerName = new Player;
+        $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insert');
+    }
 }
 
 if($_REQUEST){
@@ -32,6 +35,9 @@ if($_REQUEST){
                     case 'getRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
                         echo $data;
+                        exit();
+                    case 'startNewGame':
+                        echo $main->startNewGameHTML();
                         exit();
                 }
                 break;
@@ -52,9 +58,15 @@ if($_REQUEST){
 class MainController{
     public array $objects;
 
-    function __construct()
+    function startNewGameHTML()
     {
-        
+        $html = '<form method="POST" action="./index.php">';
+            $html .= '<label for="numberOfPlayers">Number of Players:</label>';
+            $html .= '<input id="numberOfPlayers" type="int" name="numberOfPlayers"/>';
+            $html .= '<input id="submitNewGame" type="submit" name="submitNewGame" value="Start game"/>';
+        $html .= '</form>';
+
+        return $html;
     }
 }
 ?>
@@ -68,9 +80,9 @@ class MainController{
 </head>
 <body>
     <a href="./index.php">TEST</a>
-    <!-- <a href="./index.php?rollDice=2" onclick='showPopup("rollDice",2)'>ROLL</a> -->
     <button onclick='showPopup("rollDice",2)'>ROLL</button>
-    <a href="./index.php?resetGame=2">RESET</a>
+    <button onclick='showPopup("startNewGame")'>NEW GAME</button>
+    <a href="./index.php?resetGame">RESET</a>
 <?php
 $gameBoard->printBoard();
 

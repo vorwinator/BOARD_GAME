@@ -1,17 +1,28 @@
 
 function showPopup(popupType, data) {
+    var popup = document.getElementById("popup");
+    var popupContent = document.getElementById("popupContent");
     switch (popupType) {
         case 'cellDetails':
-            var popup = document.getElementById("popup");
-            var popupContent = document.getElementById("popupContent");
             getCellDetails(data, popupContent, popup);
             break;
         case 'rollDice':
-            var popup = document.getElementById("popup");
-            var popupContent = document.getElementById("popupContent");
             getRollDice(data, popupContent, popup);
             break;
+        case 'startNewGame':
+            showStartNewGame(popupContent, popup);
+            break;
     }
+}
+
+function showStartNewGame(popupContent, popup) {
+    jQuery.ajax({
+        url: './index.php?ajaxCall=startNewGame',
+        success: function (data) {
+            popupContent.innerHTML = data;
+            popup.style.display = "block";
+        }
+    })
 }
 
 function getCellDetails(boardCellId, popupContent, popup) {
