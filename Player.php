@@ -11,7 +11,7 @@ class Player extends MainController{
 
     public float $accountBalance;
 
-    public string $pawn = '<span class="pawn">&#x2022;</span>';
+    public string $pawn;
 
     public int $currentPosition = 0;
 

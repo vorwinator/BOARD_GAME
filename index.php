@@ -22,6 +22,7 @@ else{
     for($i=1;$i<=$main->numberOfPlayers;$i++){
         $playerName = "player_".$i;
         $main->objects[$playerName] = $$playerName = new Player;
+        $$playerName->pawn = '<span id="'.$playerName.'_pawn" class="pawn">&#x2022;</span>';
         $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insertPlayerPawn');
     }
 }
