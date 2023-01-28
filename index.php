@@ -16,8 +16,10 @@ else{
 
     $main->objects['gameBoard'] = $gameBoard = new Board;
     $gameBoard->generateNewBoard();
+
+    $main->numberOfPlayers = $_REQUEST['numberOfPlayers'];
     
-    for($i=1;$i<=$_REQUEST["numberOfPlayers"];$i++){
+    for($i=1;$i<=$main->numberOfPlayers;$i++){
         $playerName = "player_".$i;
         $main->objects[$playerName] = $$playerName = new Player;
         $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insertPlayerPawn');
@@ -43,7 +45,7 @@ if($_REQUEST){
                 break;
             case 'resetGame':
                 session_destroy();
-                header('Location: ./index.php');
+                header('Location: ./index.php?numberOfPlayers='.$main->numberOfPlayers);
                 break;
             case 'rollDice':
                 $rollResult = array_sum(explode(',',$_REQUEST['rollDice']));
@@ -57,6 +59,8 @@ if($_REQUEST){
 
 class MainController{
     public array $objects;
+
+    public int $numberOfPlayers;
 
     function startNewGameHTML()
     {
