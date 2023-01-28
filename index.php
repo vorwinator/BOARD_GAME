@@ -10,6 +10,14 @@ if(isset($_SESSION['main']) && !isset($_REQUEST["submitNewGame"])){
     foreach($main->objects as $objName=>$obj){
         $$objName = $obj;
     }
+
+    $numberOfPlayers = $main->numberOfPlayers;
+
+    $turnOfPlayer = $main->turnOfPlayer;
+
+    if($main->doublet == 3) {
+        $main->doublet = 0;
+    }
 }
 else{
     $main = new MainController;
@@ -17,14 +25,18 @@ else{
     $main->objects['gameBoard'] = $gameBoard = new Board;
     $gameBoard->generateNewBoard();
 
-    $main->numberOfPlayers = $_REQUEST['numberOfPlayers'];
+    $main->numberOfPlayers = $numberOfPlayers = $_REQUEST['numberOfPlayers'];
     
     for($i=1;$i<=$main->numberOfPlayers;$i++){
-        $playerName = "player_".$i;
-        $main->objects[$playerName] = $$playerName = new Player;
-        $$playerName->pawn = '<span id="'.$playerName.'_pawn" class="pawn">&#x2022;</span>';
-        $gameBoard->modifyCellContent(0, $$playerName->pawn, 'insertPlayerPawn');
+        $playerId = "player_".$i;
+        $main->objects[$playerId] = $$playerId = new Player;
+        $$playerId->pawn = '<span id="'.$playerId.'_pawn" class="pawn">&#x2022;</span>';
+        $gameBoard->modifyCellContent(0, $$playerId->pawn, 'insertPlayerPawn');
     }
+
+    $main->turnOfPlayer = $turnOfPlayer = 1;
+
+    $main->doublet = 0;
 }
 
 if($_REQUEST){
@@ -49,10 +61,28 @@ if($_REQUEST){
                 header('Location: ./index.php?numberOfPlayers='.$main->numberOfPlayers);
                 break;
             case 'rollDice':
-                $rollResult = array_sum(explode(',',$_REQUEST['rollDice']));
-                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'remove');
-                $player_1->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $player_1->currentPosition); 
-                $gameBoard->modifyCellContent($player_1->currentPosition, $player_1->pawn, 'insertPlayerPawn');
+                $playerId = "player_".$turnOfPlayer;
+                $rollResultArray = explode(',',$_REQUEST['rollDice']);
+                $rollResult = array_sum($rollResultArray);
+                $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'remove');
+                $$playerId->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $$playerId->currentPosition); 
+                $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'insertPlayerPawn');
+                
+                $doublet = true;
+                if(count($rollResultArray)>1){
+                    foreach($rollResultArray as $key=>$val){
+                        if($rollResultArray[0] != $val){
+                            $doublet = false;
+                            break;
+                        }
+                    }
+                }
+
+                if(!$doublet) {
+                    $main->turnOfPlayer = $turnOfPlayer >= $numberOfPlayers? 1: $turnOfPlayer+1;
+                    $main->doublet = 0;
+                }
+                else $main->doublet++;
                 break;
         }
     }
@@ -62,6 +92,10 @@ class MainController{
     public array $objects;
 
     public int $numberOfPlayers;
+
+    public int $turnOfPlayer;
+
+    public int $doublet;
 
     function startNewGameHTML()
     {
