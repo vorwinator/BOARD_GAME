@@ -90,4 +90,13 @@ class Utils{
         </div>
         ';
     }
+
+    static function menuHTML(){
+        return '
+        <a href="./index.php">TEST</a>
+        <button onclick=\'showPopup("rollDice",2)\'>ROLL</button>
+        <button onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
+        <a href="./index.php?resetGame">RESET</a>
+        ';
+    }
 }

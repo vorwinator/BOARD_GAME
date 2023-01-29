@@ -101,11 +101,9 @@ class MainController{
     <script type="text/javascript" src="./utils.js"></script>
 </head>
 <body>
-    <a href="./index.php">TEST</a>
-    <button onclick='showPopup("rollDice",2)'>ROLL</button>
-    <button onclick='showPopup("startNewGame")'>NEW GAME</button>
-    <a href="./index.php?resetGame">RESET</a>
 <?php
+echo Utils::menuHTML();
+
 $gameBoard->printBoard();
 
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);
