@@ -16,8 +16,10 @@ class Player extends MainController{
 
     public int $currentPosition = 0;
 
-    function generateNewPlayer($numberOfBoardCells){
-        $this->accountBalance = $this->countAccountBalance($numberOfBoardCells);
+    function generateNewPlayer($gameBoard, $playerVarName){
+        $this->pawn = '<span id="'.$playerVarName.'_pawn" class="pawn">&#x2022;</span>';
+        $this->accountBalance = $this->countAccountBalance($gameBoard->numberOfBoardCells);
+        $gameBoard->modifyCellContent(0, $this->pawn, 'insertPlayerPawn');
     }
 
     function countAccountBalance($numberOfBoardCells = null){
