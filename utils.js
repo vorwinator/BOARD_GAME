@@ -61,19 +61,25 @@ async function showRollDice(numberOfDices, popupContent, popup) {
         url: './index.php?ajaxCall=showRollDice&numberOfDices=' + numberOfDices,
         success: function (data) {
             popupContent.innerHTML = '<div class="popupDices">' + data + '</div>';
-            jQuery(".popupContent").css("background", (255, 255, 255, 0));
-            jQuery(".popupContent").css("border", "none");
+            turnPopupBackgroundInvisible();
+            // jQuery(".popupContent").css("background", (255, 255, 255, 0));
+            // jQuery(".popupContent").css("border", "none");
             jQuery(".popupDices").css("padding-left", "25%");
             popup.style.display = "block";
             const result = [];
             for (let i = 0; i < numberOfDices; i++){
-                roll = getRandomInt(1, 7)
+                roll = getRandomInt(1, 7);
                 rollDice(roll, i);
                 result.push(roll);
             }
             redirectLikeLink("./index.php?rollDice=" + result);
         }
     })
+}
+
+function turnPopupBackgroundInvisible() {
+    jQuery(".popupContent").css("background", (255, 255, 255, 0));
+    jQuery(".popupContent").css("border", "none");
 }
 
 /**
