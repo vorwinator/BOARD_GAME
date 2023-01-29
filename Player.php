@@ -8,7 +8,7 @@
  */
 class Player extends MainController{
 
-    public string $color;
+    public string $colorHEX;
 
     public float $accountBalance;
 
@@ -17,9 +17,14 @@ class Player extends MainController{
     public int $currentPosition = 0;
 
     function generateNewPlayer($gameBoard, $playerVarName){
-        $this->pawn = '<span id="'.$playerVarName.'_pawn" class="pawn">&#x2022;</span>';
+        $this->colorHEX = $this->generatePlayerColor();
+        $this->pawn = '<span id="'.$playerVarName.'_pawn" class="pawn" style="color:#'.$this->colorHEX.'">&#x2022;</span>';
         $this->accountBalance = $this->countAccountBalance($gameBoard->numberOfBoardCells);
         $gameBoard->modifyCellContent(0, $this->pawn, 'insertPlayerPawn');
+    }
+
+    function generatePlayerColor(){
+        return substr('00000' . dechex(mt_rand(0, 0xffffff)), -6);
     }
 
     function countAccountBalance($numberOfBoardCells = null){
