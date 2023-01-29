@@ -41,4 +41,33 @@ class Utils{
             $currentPosition + $rollResult: 
                 $currentPosition + $rollResult - $numberOfBoardCells;
     }
+
+    /**
+     * @return string $html - html of form to start new game
+     */
+    static function startNewGameHTML()
+    {
+        $html = '<form method="POST" action="./index.php">';
+            $html .= '<label for="numberOfPlayers">Number of Players:</label>';
+            $html .= '<input id="numberOfPlayers" type="int" name="numberOfPlayers"/>';
+            $html .= '<input id="submitNewGame" type="submit" name="submitNewGame" value="Start game"/>';
+        $html .= '</form>';
+
+        return $html;
+    }
+
+    /**
+     * @param array $rollResultArray [int] - all rolls made in turn
+     * @return boolean doublet
+     */
+    static function checkForDoublet($rollResultArray){
+        if(count($rollResultArray)>1){
+            foreach($rollResultArray as $key=>$val){
+                if($rollResultArray[0] != $val){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

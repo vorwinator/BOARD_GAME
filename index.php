@@ -52,7 +52,7 @@ if($_REQUEST){
                         echo $data;
                         exit();
                     case 'startNewGame':
-                        echo $main->startNewGameHTML();
+                        echo Utils::startNewGameHTML();
                         exit();
                 }
                 break;
@@ -68,7 +68,7 @@ if($_REQUEST){
                 $$playerId->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $$playerId->currentPosition); 
                 $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'insertPlayerPawn');
 
-                $doublet = $main->checkForDoublet($rollResultArray);
+                $doublet = Utils::checkForDoublet($rollResultArray);
 
                 if(!$doublet) {
                     $main->turnOfPlayer = $turnOfPlayer >= $numberOfPlayers? 1: $turnOfPlayer+1;
@@ -91,35 +91,6 @@ class MainController{
     public int $turnOfPlayer;
 
     public int $doublet;
-
-    /**
-     * @return string $html - html of form to start new game
-     */
-    function startNewGameHTML()
-    {
-        $html = '<form method="POST" action="./index.php">';
-            $html .= '<label for="numberOfPlayers">Number of Players:</label>';
-            $html .= '<input id="numberOfPlayers" type="int" name="numberOfPlayers"/>';
-            $html .= '<input id="submitNewGame" type="submit" name="submitNewGame" value="Start game"/>';
-        $html .= '</form>';
-
-        return $html;
-    }
-
-    /**
-     * @param array $rollResultArray [int] - all rolls made in turn
-     * @return boolean doublet
-     */
-    function checkForDoublet($rollResultArray){
-        if(count($rollResultArray)>1){
-            foreach($rollResultArray as $key=>$val){
-                if($rollResultArray[0] != $val){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 }
 ?>
 
