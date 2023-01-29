@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @param {string} popupType - what will be shown
+ * @param {*} data
+ */
 function showPopup(popupType, data) {
     var popup = document.getElementById("popup");
     var popupContent = document.getElementById("popupContent");
@@ -15,6 +19,11 @@ function showPopup(popupType, data) {
     }
 }
 
+/**
+ * 
+ * @param {object} popupContent - content
+ * @param {object} popup - background
+ */
 function showStartNewGame(popupContent, popup) {
     jQuery.ajax({
         url: './index.php?ajaxCall=startNewGame',
@@ -25,6 +34,12 @@ function showStartNewGame(popupContent, popup) {
     })
 }
 
+/**
+ * 
+ * @param {int} boardCellId
+ * @param {object} popupContent - content
+ * @param {object} popup - background
+ */
 function showCellDetails(boardCellId, popupContent, popup) {
     jQuery.ajax({
         url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId,
@@ -35,6 +50,12 @@ function showCellDetails(boardCellId, popupContent, popup) {
     })
 }
 
+/**
+ * 
+ * @param {int} numberOfDices - how many rolls will be made
+ * @param {object} popupContent - content
+ * @param {object} popup - background
+ */
 async function showRollDice(numberOfDices, popupContent, popup) {
     jQuery.ajax({
         url: './index.php?ajaxCall=showRollDice&numberOfDices=' + numberOfDices,
@@ -55,27 +76,50 @@ async function showRollDice(numberOfDices, popupContent, popup) {
     })
 }
 
+/**
+ * 
+ * @param {string} href - redirect to
+ * @param {int} time - ms of delay
+ */
 async function redirectLikeLink(href, time = 2500) {
     await delay(time);
     window.location.href = href;
 }
 
+/**
+ * 
+ * @param {int} time - ms of delay
+ * @returns timeout
+ */
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
+/**
+ * 
+ * @param {int} min - minimal value -> inclusive this one
+ * @param {int} max - maximum value -> exclusive this one
+ * @returns min =< int > max
+ */
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
   
-
+/**
+ * make popup dissappear
+ */
 function closePopup(){
     var popup = document.getElementById("popup");
     popup.style.display = "none";
 }
 
+/**
+ * rotate the dice to show result
+ * @param {int} rollResult - result of dice roll
+ * @param {int} id - dice id
+ */
 async function rollDice(rollResult, id) {
     await delay(500);
     switch (rollResult) {
@@ -100,6 +144,7 @@ async function rollDice(rollResult, id) {
     }
 }
 
+//TODO
 window.onclick = function(event) {
     var popup = document.getElementById("popup");
     if (event.target == popup) {

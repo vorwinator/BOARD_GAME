@@ -3,6 +3,7 @@
  * @var array $board - contains all of current game board data
  * @var int $square - contains number of rows and columns 
  * @var int $numberOfBoardCells - contains number of cells on which players move around 
+ * @author Roman Mohyła
  */
 class Board extends MainController{
 
@@ -16,7 +17,6 @@ class Board extends MainController{
 
     /**
      * Generates new board for new game - should be run only once at the beginning of the game
-     * @param int $square - contains number of rows and columns
      */
     function generateNewBoard(){
         if($this->square < 3) $this->square = 3;
@@ -150,7 +150,7 @@ class Board extends MainController{
 
     /**
      * @param int $boardCellId - current cell id
-     * @param string $newContent - content that will be added to the cell
+     * @param string $modification - base value of upcoming modification
      * @param string $mode - determines what kind of modification will happen
      */
     function modifyCellContent($boardCellId, $modification, $mode){
@@ -166,6 +166,10 @@ class Board extends MainController{
         }
     }
 
+    /**
+     * @param int $boardCellId - current cell id
+     * @return string $html - content of cell
+     */
     function cellDetailsHTML($boardCellId){
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
@@ -214,6 +218,10 @@ class Board extends MainController{
         return $html;
     }
 
+    /**
+     * @param int $numberOfDices - how many dices will be generated
+     * @return string $html - dice
+     */
     function prepareDiceHTML($numberOfDices){
         $html = "";
         for($i=0;$i<$numberOfDices;$i++){

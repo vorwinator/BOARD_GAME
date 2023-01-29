@@ -88,6 +88,9 @@ if($_REQUEST){
     }
 }
 
+/**
+ * @author Roman Mohyła
+ */
 class MainController{
     public array $objects;
 
@@ -97,6 +100,9 @@ class MainController{
 
     public int $doublet;
 
+    /**
+     * @return string $html - html of form to start new game
+     */
     function startNewGameHTML()
     {
         $html = '<form method="POST" action="./index.php">';
