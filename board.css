@@ -78,9 +78,9 @@
 
 /* START dice */
 .dice{
-    margin-left: 500px; /*temporary*/
-    width:200px;
-    height:200px;
+    margin-left: 300px; /*temporary*/
+    width:100px;
+    height:100px;
     position: relative;
     transform-style: preserve-3d;
     transform: translateZ(-100px) rotateY(-45deg) rotateX(-45deg);
@@ -89,28 +89,28 @@
 
 .diceOne{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:center;
     align-items:center;
-    transform: rotateX(-90deg) translateZ(100px);
+    transform: rotateX(-90deg) translateZ(50px);
     z-index: 1;
 }
 
 .diceTwo{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:space-between;
-    transform: rotateY(180deg) translateZ(100px);
+    transform: rotateY(180deg) translateZ(50px);
     z-index: 2;
 }
 
@@ -120,14 +120,14 @@
 
 .diceThree{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:space-between;
-    transform: rotateY(90deg) translateZ(100px);
+    transform: rotateY(90deg) translateZ(50px);
     z-index: 3;
 }
 
@@ -141,14 +141,14 @@
 
 .diceFour{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:space-between;
-    transform: rotateY(0deg) translateZ(100px);
+    transform: rotateY(0deg) translateZ(50px);
     z-index: 4;
 }
 
@@ -160,14 +160,14 @@
 
 .diceFive{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:space-between;
-    transform: rotateY(-90deg) translateZ(100px);
+    transform: rotateY(-90deg) translateZ(50px);
     z-index: 5;
 }
 
@@ -183,14 +183,14 @@
 
 .diceSix{
     position: absolute;
-    width:200px;
-    height:200px;
+    width:100px;
+    height:100px;
     background-color:black;
     border-radius:10%;
     
     display:flex;
     justify-content:space-between;
-    transform: rotateX(90deg) translateZ(100px);
+    transform: rotateX(90deg) translateZ(50px);
     z-index: 6;
 }
 
@@ -201,9 +201,9 @@
 }
 
 .dot{
-    width:20px;
-    height:20px;
-    margin:20px;
+    width:10px;
+    height:10px;
+    margin:10px;
     background-color:orange;
     border-radius:15px;
     display:block;
