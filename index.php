@@ -103,7 +103,7 @@ class MainController{
 <body>
 <?php
 echo Utils::menuHTML();
-
+echo Utils::popupWindowHTML();
 $gameBoard->printBoard();
 
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);
@@ -113,7 +113,6 @@ foreach($objNames as $key=>$objName){
 }
 $_SESSION['main'] = $main;
 
-echo Utils::popupWindowHTML();
 ?>
 
 </body>
