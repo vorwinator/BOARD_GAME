@@ -71,8 +71,7 @@ if($_REQUEST){
                 $doublet = Utils::checkForDoublet($rollResultArray);
 
                 if(!$doublet) {
-                    $main->turnOfPlayer = $turnOfPlayer >= $numberOfPlayers? 1: $turnOfPlayer+1;
-                    $main->doublet = 0;
+                    Utils::nextTurn($main);
                 }
                 else $main->doublet++;
                 break;
