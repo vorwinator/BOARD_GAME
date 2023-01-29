@@ -57,10 +57,12 @@ class Utils{
     }
 
     /**
-     * @param array $rollResultArray [int] - all rolls made in turn
+     * @param array/string $rollResultArray [int] - all rolls made in turn
      * @return boolean doublet
      */
     static function checkForDoublet($rollResultArray){
+        if(is_string($rollResultArray))
+            $rollResultArray = explode(',',$rollResultArray);
         if(count($rollResultArray)>1){
             foreach($rollResultArray as $key=>$val){
                 if($rollResultArray[0] != $val){
@@ -98,5 +100,13 @@ class Utils{
         <button onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
         <a href="./index.php?resetGame">RESET</a>
         ';
+    }
+
+    /**
+     * @param string $rollDice - all rolls results separated by coma
+     * @return int - sum of all rolls
+     */
+    static function sumOfDiceRolls($rollDice){
+        return array_sum(explode(',',$rollDice));
     }
 }

@@ -167,6 +167,16 @@ class Board extends MainController{
     }
 
     /**
+     * @param object $playerId
+     * @param int $rollResult - sum of all rolls
+     */
+    function changePlayerPosition($playerId, $rollResult){
+        $this->modifyCellContent($playerId->currentPosition, $playerId->pawn, 'remove');
+        $playerId->currentPosition = Utils::countNextPosition($rollResult, $this->numberOfBoardCells, $playerId->currentPosition); 
+        $this->modifyCellContent($playerId->currentPosition, $playerId->pawn, 'insertPlayerPawn');
+    }
+
+    /**
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
      */

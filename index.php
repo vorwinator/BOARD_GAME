@@ -62,13 +62,10 @@ if($_REQUEST){
                 break;
             case 'rollDice':
                 $playerId = "player_".$turnOfPlayer;
-                $rollResultArray = explode(',',$_REQUEST['rollDice']);
-                $rollResult = array_sum($rollResultArray);
-                $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'remove');
-                $$playerId->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $$playerId->currentPosition); 
-                $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'insertPlayerPawn');
+                
+                $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
 
-                $doublet = Utils::checkForDoublet($rollResultArray);
+                $doublet = Utils::checkForDoublet($_REQUEST['rollDice']);
 
                 if(!$doublet) {
                     Utils::nextTurn($main);
