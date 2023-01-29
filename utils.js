@@ -17,7 +17,7 @@ function showPopup(popupType, data) {
             showStartNewGame(popupContent, popup);
             break;
         case 'buyingPhase':
-            showCellDetails(data.currentPosition, popupContent, popup, 1);
+            showCellDetails(data.currentPosition, popupContent, popup, 1, data.playerVarName);
             break;
     }
 }
@@ -43,10 +43,11 @@ function showStartNewGame(popupContent, popup) {
  * @param {object} popupContent - content
  * @param {object} popup - background
  * @param {boolean} buyingPhase - enable/disable buttons to buy
+ * @param {string} playerVarName - name of player object in main controller
  */
-function showCellDetails(boardCellId, popupContent, popup, buyingPhase) {
+function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerVarName = null) {
     jQuery.ajax({
-        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase,
+        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase + '&playerVarName=' + playerVarName,
         success: function (data) {
             popupContent.innerHTML = data;
             popup.style.display = "block";

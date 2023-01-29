@@ -44,7 +44,7 @@ if($_REQUEST){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
-                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']));
+                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']), $_REQUEST['playerVarName']);
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);

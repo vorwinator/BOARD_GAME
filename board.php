@@ -180,7 +180,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
      */
-    function cellDetailsHTML($boardCellId, $buyingPhase = false){
+    function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerVarName = null){
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
             $html .= "<h1>";
@@ -192,7 +192,7 @@ class Board extends MainController{
             $html .= "<h2>";
             $html .= "Purchase price: ";
             $html .= $this->board['cells'][$boardCellId]['purchasePrice'];
-            if($buyingPhase){
+            if($buyingPhase && $this->board['cells'][$boardCellId]['owner'] == "bank" && $this->board['cells'][$boardCellId]['owner'] != $playerVarName){
                 $html .= '$ - <button onclick="">Buy</button><br>';
             }
             $html .= "</h2>";
@@ -225,7 +225,7 @@ class Board extends MainController{
                 else
                     $html .= $key.' => '.$price.'$';
 
-                if($buyingPhase && $key > $this->board['cells'][$boardCellId]['houseLevel']){
+                if($buyingPhase && $this->board['cells'][$boardCellId]['owner'] == $playerVarName && $key > $this->board['cells'][$boardCellId]['houseLevel']){
                     $html .= ' - <button onclick="">Buy</button><br>';
                 }
                 else 
