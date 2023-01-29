@@ -67,16 +67,8 @@ if($_REQUEST){
                 $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'remove');
                 $$playerId->currentPosition = Utils::countNextPosition($rollResult, $gameBoard->numberOfBoardCells, $$playerId->currentPosition); 
                 $gameBoard->modifyCellContent($$playerId->currentPosition, $$playerId->pawn, 'insertPlayerPawn');
-                
-                $doublet = true;
-                if(count($rollResultArray)>1){
-                    foreach($rollResultArray as $key=>$val){
-                        if($rollResultArray[0] != $val){
-                            $doublet = false;
-                            break;
-                        }
-                    }
-                }
+
+                $doublet = $main->checkForDoublet($rollResultArray);
 
                 if(!$doublet) {
                     $main->turnOfPlayer = $turnOfPlayer >= $numberOfPlayers? 1: $turnOfPlayer+1;
@@ -112,6 +104,21 @@ class MainController{
         $html .= '</form>';
 
         return $html;
+    }
+
+    /**
+     * @param array $rollResultArray [int] - all rolls made in turn
+     * @return boolean doublet
+     */
+    function checkForDoublet($rollResultArray){
+        if(count($rollResultArray)>1){
+            foreach($rollResultArray as $key=>$val){
+                if($rollResultArray[0] != $val){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 ?>
