@@ -71,6 +71,9 @@ class Utils{
         return true;
     }
 
+    /**
+     * @param object $main - MainController object
+     */
     static function nextTurn($main){
         $main->turnOfPlayer = $main->turnOfPlayer >= $main->numberOfPlayers? 1: $main->turnOfPlayer+1;
         $main->doublet = 0;
