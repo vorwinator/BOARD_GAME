@@ -15,8 +15,8 @@ if(isset($_SESSION['main']) && !isset($_REQUEST["submitNewGame"])){
 
     $turnOfPlayer = $main->turnOfPlayer;
 
-    if($main->doublet == 3) {
-        $main->doublet = 0;
+    if($main->doubletsInRow == 3) {
+        $main->doubletsInRow = 0;
     }
 }
 else{
@@ -36,7 +36,7 @@ else{
 
     $main->turnOfPlayer = $turnOfPlayer = 1;
 
-    $main->doublet = 0;
+    $main->doubletsInRow = 0;
 }
 
 if($_REQUEST){
@@ -62,7 +62,7 @@ if($_REQUEST){
                 break;
             case 'rollDice':
                 $playerId = "player_".$turnOfPlayer;
-                
+
                 $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
 
                 $doublet = Utils::checkForDoublet($_REQUEST['rollDice']);
@@ -70,7 +70,7 @@ if($_REQUEST){
                 if(!$doublet) {
                     Utils::nextTurn($main);
                 }
-                else $main->doublet++;
+                else $main->doubletsInRow++;
                 break;
         }
     }
@@ -86,7 +86,7 @@ class MainController{
 
     public int $turnOfPlayer;
 
-    public int $doublet;
+    public int $doubletsInRow;
 }
 ?>
 
