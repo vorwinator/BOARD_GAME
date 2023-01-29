@@ -44,7 +44,7 @@ if($_REQUEST){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
-                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId']);
+                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']));
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
@@ -100,6 +100,8 @@ class MainController{
 <?php
 echo Utils::menuHTML();
 echo Utils::popupWindowHTML();
+if(isset($_REQUEST['rollDice']))
+    echo Utils::initializeBuyingPhase(${"player_".$turnOfPlayer}, $gameBoard, "player_".$turnOfPlayer);
 $gameBoard->printBoard();
 
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);

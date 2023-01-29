@@ -180,7 +180,7 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
      */
-    function cellDetailsHTML($boardCellId){
+    function cellDetailsHTML($boardCellId, $buyingPhase = false){
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
             $html .= "<h1>";
@@ -192,6 +192,9 @@ class Board extends MainController{
             $html .= "<h2>";
             $html .= "Purchase price: ";
             $html .= $this->board['cells'][$boardCellId]['purchasePrice'];
+            if($buyingPhase){
+                $html .= '$ - <button onclick="">Buy</button><br>';
+            }
             $html .= "</h2>";
 
             $html .= "<h2>";
@@ -202,10 +205,10 @@ class Board extends MainController{
                 if($key == $this->board['cells'][$boardCellId]['houseLevel']){
                     $html .= '<b>';
                     $html .= $key.' => '.$price;
-                    $html .= '</b><br>';
+                    $html .= '$</b><br>';
                 }
                 else
-                    $html .= $key.' => '.$price.'<br>';
+                    $html .= $key.' => '.$price.'$<br>';
             }
             $html .= "</div>";
 
@@ -217,10 +220,16 @@ class Board extends MainController{
                 if($key == $this->board['cells'][$boardCellId]['houseLevel']){
                     $html .= '<b>';
                     $html .= $key.' => '.$price;
-                    $html .= '</b><br>';
+                    $html .= '$</b>';
                 }
                 else
-                    $html .= $key.' => '.$price.'<br>';
+                    $html .= $key.' => '.$price.'$';
+
+                if($buyingPhase && $key > $this->board['cells'][$boardCellId]['houseLevel']){
+                    $html .= ' - <button onclick="">Buy</button><br>';
+                }
+                else 
+                    $html .= '<br>';
             }
             $html .= "</div>";
 

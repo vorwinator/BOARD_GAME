@@ -102,6 +102,13 @@ class Utils{
         ';
     }
 
+    static function initializeBuyingPhase($player, $gameBoard, $playerVarName){
+        return "<script>
+        var data = ".json_encode(array('playerVarName'=>$playerVarName, 'playerColor'=>$player->colorHEX, 'currentPosition'=>$player->currentPosition, 'currentCell'=>$gameBoard->board["cells"][$player->currentPosition]))."
+        showPopup('buyingPhase', data);
+        </script>";
+    }
+
     /**
      * @param string $rollDice - all rolls results separated by coma
      * @return int - sum of all rolls

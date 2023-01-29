@@ -8,13 +8,16 @@ function showPopup(popupType, data) {
     var popupContent = document.getElementById("popupContent");
     switch (popupType) {
         case 'cellDetails':
-            showCellDetails(data, popupContent, popup);
+            showCellDetails(data, popupContent, popup, 0);
             break;
         case 'rollDice':
             showRollDice(data, popupContent, popup);
             break;
         case 'startNewGame':
             showStartNewGame(popupContent, popup);
+            break;
+        case 'buyingPhase':
+            showCellDetails(data.currentPosition, popupContent, popup, 1);
             break;
     }
 }
@@ -39,10 +42,11 @@ function showStartNewGame(popupContent, popup) {
  * @param {int} boardCellId
  * @param {object} popupContent - content
  * @param {object} popup - background
+ * @param {boolean} buyingPhase - enable/disable buttons to buy
  */
-function showCellDetails(boardCellId, popupContent, popup) {
+function showCellDetails(boardCellId, popupContent, popup, buyingPhase) {
     jQuery.ajax({
-        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId,
+        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase,
         success: function (data) {
             popupContent.innerHTML = data;
             popup.style.display = "block";
