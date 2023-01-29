@@ -47,7 +47,8 @@ class Utils{
      */
     static function startNewGameHTML()
     {
-        $html = '<form method="POST" action="./index.php">';
+        $html = '<span class="close" onclick="closePopup();">&times;</span>';
+        $html .= '<form method="POST" action="./index.php">';
             $html .= '<label for="numberOfPlayers">Number of Players:</label>';
             $html .= '<input id="numberOfPlayers" type="int" name="numberOfPlayers"/>';
             $html .= '<input id="submitNewGame" type="submit" name="submitNewGame" value="Start game"/>';
