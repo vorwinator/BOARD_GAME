@@ -16,7 +16,9 @@
 .tr{
     border: black solid 3px;
 }
+/* board content END*/
 
+/* START player style */
 .pawn{
     color: red;
     font-size: 50px;
@@ -31,7 +33,7 @@
     display: flex;
     flex-wrap: wrap;
 }
-/* board content END*/
+/* END player style */
 
 /* START popup */
 .popup {
