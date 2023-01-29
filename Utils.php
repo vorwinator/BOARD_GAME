@@ -78,4 +78,16 @@ class Utils{
         $main->turnOfPlayer = $main->turnOfPlayer >= $main->numberOfPlayers? 1: $main->turnOfPlayer+1;
         $main->doublet = 0;
     }
+
+    /**
+     * generates empty popup for future use
+     */
+    static function popupWindowHTML(){
+        return '
+        <div id="popup" class="popup">
+          <div id="popupContent" class="popupContent">
+          </div>
+        </div>
+        ';
+    }
 }

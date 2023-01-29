@@ -114,12 +114,9 @@ foreach($objNames as $key=>$objName){
     $main->objects[$objName] = $$objName;
 }
 $_SESSION['main'] = $main;
-?>
 
-<div id="popup" class="popup">
-  <div id="popupContent" class="popupContent">
-  </div>
-</div>
+echo Utils::popupWindowHTML();
+?>
 
 </body>
 
