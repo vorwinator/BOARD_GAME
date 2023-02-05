@@ -239,20 +239,22 @@ class Board extends MainController{
      * @return string $html - content of cell
      */
     function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerVarName = null, $player = null){
+        $cell = $this->board['cells'][$boardCellId];
+
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
             $html .= "<h1>";
-            $html .= $this->board['cells'][$boardCellId]['name']; //TODO custom name
+            $html .= $cell['name']; //TODO custom name
             $html .= " - ";
-            $html .= $this->board['cells'][$boardCellId]['owner'];
+            $html .= $cell['owner'];
             $html .= "</h1>";
 
             $html .= "<h2>";
             $html .= "Purchase price: ";
-            $html .= $this->board['cells'][$boardCellId]['purchasePrice'];
-            if($buyingPhase && $this->board['cells'][$boardCellId]['owner'] == "bank" && $this->board['cells'][$boardCellId]['owner'] != $playerVarName){
-                $disabled = $player->accountBalance < $this->board['cells'][$boardCellId]['purchasePrice']? "disabled": "";
-                $html .= '$ - <button onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$this->board['cells'][$boardCellId]['name'].'\', '.$this->board['cells'][$boardCellId]['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+            $html .= $cell['purchasePrice'];
+            if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerVarName){
+                $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
+                $html .= '$ - <button onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
@@ -260,8 +262,8 @@ class Board extends MainController{
             $html .= "Rent prices:";
             $html .= "</h2>";
             $html .= '<div class="subListPopup">';
-            foreach($this->board['cells'][$boardCellId]['rentPrices'] as $key=>$price){
-                if($key == $this->board['cells'][$boardCellId]['houseLevel']){
+            foreach($cell['rentPrices'] as $key=>$price){
+                if($key == $cell['houseLevel']){
                     $html .= '<b>';
                     $html .= $key.' => '.$price;
                     $html .= '$</b><br>';
@@ -275,8 +277,8 @@ class Board extends MainController{
             $html .= "Housing prices:";
             $html .= "</h2>";
             $html .= '<div class="subListPopup">';
-            foreach($this->board['cells'][$boardCellId]['housingPrices'] as $key=>$price){
-                if($key == $this->board['cells'][$boardCellId]['houseLevel']){
+            foreach($cell['housingPrices'] as $key=>$price){
+                if($key == $cell['houseLevel']){
                     $html .= '<b>';
                     $html .= $key.' => '.$price;
                     $html .= '$</b>';
@@ -284,7 +286,7 @@ class Board extends MainController{
                 else
                     $html .= $key.' => '.$price.'$';
 
-                if($buyingPhase && $this->board['cells'][$boardCellId]['owner'] == $playerVarName && $key > $this->board['cells'][$boardCellId]['houseLevel']){
+                if($buyingPhase && $cell['owner'] == $playerVarName && $key > $cell['houseLevel']){
                     $html .= ' - <button onclick="">Buy</button><br>';
                 }
                 else 
