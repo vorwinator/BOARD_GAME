@@ -64,14 +64,16 @@ class Board extends MainController{
      * @param int $boardCellId - current cell id
      */
     function generateCell($boardCellId){
-        $this->board['cells'][$boardCellId]['html'] = '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"><div class="cellPawns"></div></td>';
-        $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
-        $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
-        $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
-        $this->board['cells'][$boardCellId]['name'] = "Cell_".$boardCellId;
-        $this->board['cells'][$boardCellId]['owner'] = "bank";
-        $this->board['cells'][$boardCellId]['houseLevel'] = 0;
-        // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
+        $this->board['cells'][$boardCellId] = Array(
+            'html' => '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"><div class="cellPawns"></div></td>',
+            'housingPrices' => $this->generateCellHousingPrices($boardCellId),
+            'rentPrices' => $this->generateCellRentPrices($boardCellId),
+            'purchasePrice' => $this->generatePurchasePrice($boardCellId),
+            'name' => "Cell_".$boardCellId,
+            'owner' => 'bank',
+            'houseLevel' => 0,
+            // 'extraRules' => $this->generateCellExtraRules($boardCellId),
+        );
     }
 
     /**
