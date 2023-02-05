@@ -18,6 +18,13 @@
 }
 /* board content END*/
 
+/* START page */
+.mainMenu{
+    width:100%;
+    display:flex;
+    justify-content:space-evenly;
+}
+/* page END*/
 /* START player style */
 .pawn{
     font-size: 50px;

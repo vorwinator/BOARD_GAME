@@ -99,10 +99,17 @@ class Utils{
      */
     static function menuHTML(){
         return '
-        <a href="./index.php">TEST</a>
-        <button onclick=\'showPopup("rollDice",2)\'>ROLL</button>
-        <button onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
-        <a href="./index.php?resetGame">RESET</a>
+        <div id="mainMenu" class="mainMenu">
+            <div>
+                <button onclick=\'showPopup("rollDice",2)\'>ROLL</button>
+            </div>
+            <div>
+                <button onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
+            </div>
+            <div>
+                <a href="./index.php?resetGame"><button>RESET</button></a>
+            </div>
+        </div>
         ';
     }
 
