@@ -100,6 +100,7 @@ class MainController{
     <script type="text/javascript" src="./utils.js"></script>
 </head>
 <body>
+<div class="page">
 <?php
 echo Utils::menuHTML();
 echo Utils::popupWindowHTML();
@@ -115,7 +116,7 @@ foreach($objNames as $key=>$objName){
 $_SESSION['main'] = $main;
 
 ?>
-
+</div>
 </body>
 
 
