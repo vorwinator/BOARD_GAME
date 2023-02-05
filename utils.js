@@ -171,8 +171,16 @@ function buyCellPrompt(boardCellId, playerVarName, cellName, cellPurchasePrice) 
 //TODO
 window.onclick = function(event) {
     var popup = document.getElementById("popup");
+    var buyingPhase = document.getElementsByClassName("buyingPhase").length;
     if (event.target == popup) {
-        popup.style.display = "none";
+        if (buyingPhase) {
+            if (confirm("Are You sure You want to leave popup?")) {
+                popup.style.display = "none";
+            }
+        }
+        else {
+            popup.style.display = "none";
+        }
     }
 }
 

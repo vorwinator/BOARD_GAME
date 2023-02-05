@@ -254,7 +254,7 @@ class Board extends MainController{
             $html .= $cell['purchasePrice'];
             if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerVarName){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
-                $html .= '$ - <button onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+                $html .= '$ - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
