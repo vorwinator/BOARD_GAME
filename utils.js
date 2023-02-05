@@ -1,7 +1,7 @@
 /**
  * 
  * @param {string} popupType - what will be shown
- * @param {*} data
+ * @param {*} data - "I could be brown, I could be blue, I could be violet sky I could be hurtful, I could be purple, I could be anything you like" ~ MIKA - Grace Kelly
  */
 function showPopup(popupType, data) {
     var popup = document.getElementById("popup");
