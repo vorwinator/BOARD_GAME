@@ -44,7 +44,7 @@ if($_REQUEST){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
-                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']), $_REQUEST['playerVarName']);
+                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']), $_REQUEST['playerVarName'], ${$_REQUEST['playerVarName']});
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
@@ -70,6 +70,9 @@ if($_REQUEST){
                     Utils::nextTurn($main);
                 }
                 else $main->doubletsInRow++;
+                break;
+            case 'buyCell':
+                $gameBoard->purchaseCell($_REQUEST['boardCellId'], ${$_REQUEST['playerVarName']});
                 break;
         }
     }

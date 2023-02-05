@@ -155,6 +155,19 @@ async function rollDice(rollResult, id) {
     }
 }
 
+/**
+ * Confirmation popup to purchase cell
+ * @param {int} boardCellId 
+ * @param {string} playerVarName 
+ * @param {string} cellName 
+ * @param {float} cellPurchasePrice 
+ */
+function buyCellPrompt(boardCellId, playerVarName, cellName, cellPurchasePrice) {
+    if (confirm('You are going to buy ' + cellName + ' for a ' + cellPurchasePrice + '$')) {
+        redirectLikeLink('./index.php?buyCell&boardCellId=' + boardCellId + '&playerVarName=' + playerVarName, 1);
+    }
+}
+
 //TODO
 window.onclick = function(event) {
     var popup = document.getElementById("popup");

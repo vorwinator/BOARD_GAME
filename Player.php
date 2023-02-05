@@ -16,10 +16,13 @@ class Player extends MainController{
 
     public int $currentPosition = 0;
 
+    public string $nick;
+
     function generateNewPlayer($gameBoard, $playerVarName){
         $this->colorHEX = $this->generatePlayerColor();
         $this->pawn = '<span id="'.$playerVarName.'_pawn" class="pawn" style="color:#'.$this->colorHEX.'">&#x2022;</span>';
-        $this->accountBalance = $this->countAccountBalance($gameBoard->numberOfBoardCells);
+        $this->countAccountBalance("gameStart", $gameBoard->numberOfBoardCells);
+        $this->nick = $playerVarName;
         $gameBoard->modifyCellContent(0, $this->pawn, 'insertPlayerPawn');
     }
 
@@ -27,7 +30,18 @@ class Player extends MainController{
         return substr('00000' . dechex(mt_rand(0, 0xffffff)), -6);
     }
 
-    function countAccountBalance($numberOfBoardCells = null){
-        return $numberOfBoardCells * 1000;
+    /**
+     * @param string $mode - determines action type
+     * @param float $number - value for calculations
+     */
+    function countAccountBalance($mode, $number){
+        switch($mode){
+            case "gameStart":
+                $this->accountBalance = $number * 1000;
+                break;
+            case "substract":
+                $this->accountBalance -= $number;
+                break;
+        }
     }
 }

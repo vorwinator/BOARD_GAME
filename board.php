@@ -68,6 +68,7 @@ class Board extends MainController{
         $this->board['cells'][$boardCellId]['housingPrices'] = $this->generateCellHousingPrices($boardCellId);
         $this->board['cells'][$boardCellId]['rentPrices'] = $this->generateCellRentPrices($boardCellId);
         $this->board['cells'][$boardCellId]['purchasePrice'] = $this->generatePurchasePrice($boardCellId);
+        $this->board['cells'][$boardCellId]['name'] = "Cell_".$boardCellId;
         $this->board['cells'][$boardCellId]['owner'] = "bank";
         $this->board['cells'][$boardCellId]['houseLevel'] = 0;
         // $this->board['cells'][$boardCellId]['extraRules'] = generateCellExtraRules($boardCellId);
@@ -163,6 +164,26 @@ class Board extends MainController{
                 $html = explode($modification, $this->board['cells'][$boardCellId]['html']);
                 $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
                 break;
+            case 'borderColor':
+                $html = explode('>', $this->board['cells'][$boardCellId]['html'], 2);
+
+                if(stristr($html[0], 'border-color: #')){
+                    $html_2 = explode('border-color: #', $html[0]);
+                    $modification = 'border-color: #'.$modification.';';
+                    $html[0] = str_replace('border-color: #', $modification, $html[0]).'>';
+                }
+                elseif(stristr($html[0], 'style=')){
+                    $html_2 = explode('style="', $html[0]);
+                    $modification = 'style="border-color: #'.$modification.';';
+                    $html[0] = str_replace('style="', $modification, $html[0]).'>';
+                }
+                else{
+                    $modification = ' style="border-color: #'.$modification.';">';
+                    $html[0] .= $modification;
+                }
+
+                $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
+                break;
         }
     }
 
@@ -177,14 +198,45 @@ class Board extends MainController{
     }
 
     /**
+     * modifies cell by changing owner and visual appeareance
+     * @param int $boardCellId - current cell id
+     * @param object $player
+     */
+    function purchaseCell($boardCellId, $player){
+        $cell = $this->board['cells'][$boardCellId];
+
+        $player->countAccountBalance("substract", $cell['purchasePrice']);
+        $this->changeCellOwner($player->nick, $boardCellId);
+        $this->changeCellBorderColor($boardCellId, $player);
+    }
+
+    /**
+     * changes cell owner
+     * @param int $boardCellId - current cell id
+     * @param string $playerNick
+     */
+    function changeCellOwner($playerNick = 'bank', $boardCellId){
+        $this->board['cells'][$boardCellId]['owner'] = $playerNick;
+    }
+
+    /**
+     * changes cell border color
+     * @param int $boardCellId - current cell id
+     * @param object $player
+     */
+    function changeCellBorderColor($boardCellId, $player){
+        $this->modifyCellContent($boardCellId, $player->colorHEX, "borderColor");
+    }
+
+    /**
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
      */
-    function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerVarName = null){
+    function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerVarName = null, $player = null){
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
             $html .= "<h1>";
-            // $html .= $this->board['cells'][$boardCellId]['name']; //TODO
+            $html .= $this->board['cells'][$boardCellId]['name']; //TODO custom name
             $html .= " - ";
             $html .= $this->board['cells'][$boardCellId]['owner'];
             $html .= "</h1>";
@@ -193,7 +245,8 @@ class Board extends MainController{
             $html .= "Purchase price: ";
             $html .= $this->board['cells'][$boardCellId]['purchasePrice'];
             if($buyingPhase && $this->board['cells'][$boardCellId]['owner'] == "bank" && $this->board['cells'][$boardCellId]['owner'] != $playerVarName){
-                $html .= '$ - <button onclick="">Buy</button><br>';
+                $disabled = $player->accountBalance < $this->board['cells'][$boardCellId]['purchasePrice']? "disabled": "";
+                $html .= '$ - <button onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$this->board['cells'][$boardCellId]['name'].'\', '.$this->board['cells'][$boardCellId]['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
