@@ -157,17 +157,19 @@ class Board extends MainController{
      * @param string $mode - determines what kind of modification will happen
      */
     function modifyCellContent($boardCellId, $modification, $mode){
+        $cell = $this->board['cells'][$boardCellId];
+
         switch($mode){
             case 'insertPlayerPawn':
-                $html = explode('<div class="cellPawns">', $this->board['cells'][$boardCellId]['html']);
-                $this->board['cells'][$boardCellId]['html'] = $html[0].'<div class="cellPawns">'.$modification.$html[1];
+                $html = explode('<div class="cellPawns">', $cell['html']);
+                $cell['html'] = $html[0].'<div class="cellPawns">'.$modification.$html[1];
                 break;
             case 'remove':
-                $html = explode($modification, $this->board['cells'][$boardCellId]['html']);
-                $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
+                $html = explode($modification, $cell['html']);
+                $cell['html'] = $html[0].$html[1];
                 break;
             case 'borderColor':
-                $html = explode('>', $this->board['cells'][$boardCellId]['html'], 2);
+                $html = explode('>', $cell['html'], 2);
 
                 if(stristr($html[0], 'border-color: #')){
                     $html_2 = explode('border-color: #', $html[0]);
@@ -184,9 +186,11 @@ class Board extends MainController{
                     $html[0] .= $modification;
                 }
 
-                $this->board['cells'][$boardCellId]['html'] = $html[0].$html[1];
+                $cell['html'] = $html[0].$html[1];
                 break;
         }
+
+        $this->board['cells'][$boardCellId] = $cell;
     }
 
     /**
