@@ -1,16 +1,11 @@
 /*START board content */
-.Cell{
+.cell{
     border: black solid 3px;
-    max-width: 77px;
-    max-height: 77px;
-    height: 77px;
-    width: 77px;
+    width: 100px;
 }
 
 .board{
-    border: black solid 3px; 
-    height:800px; 
-    width:800px
+    border: black solid 3px;
 }
 
 .tr{
@@ -24,7 +19,15 @@
     display:flex;
     justify-content:space-evenly;
 }
+
+.gameBoard{
+    width:50%;
+    display:flex;
+    justify-content: center;
+    overflow:auto;
+}
 /* page END*/
+
 /* START player style */
 .pawn{
     font-size: 50px;
@@ -222,7 +225,7 @@
 /* dice END */
 
 /*START board content */
-#Cell_center{
+#cellCenter{
     border: black solid 3px;
 }
 /* board content END*/

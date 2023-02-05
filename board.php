@@ -49,7 +49,7 @@ class Board extends MainController{
                     }
 
                     if($i==1 && $j==0){//center
-                        $this->board['table']['center'] = '<td id="Cell_center" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'"></td>';
+                        $this->board['table']['center'] = '<td id="cellCenter" colspan="'. $this->square-2 .'" rowspan="'. $this->square-2 .'"></td>';
                     }
                 }
             }
@@ -65,7 +65,7 @@ class Board extends MainController{
      */
     function generateCell($boardCellId){
         $this->board['cells'][$boardCellId] = Array(
-            'html' => '<td id="Cell_'. $boardCellId .'" class="Cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"><div class="cellPawns"></div></td>',
+            'html' => '<td id="cell_'. $boardCellId .'" class="cell" onclick="showPopup(\'cellDetails\','.$boardCellId.');"><div class="cellPawns"></div></td>',
             'housingPrices' => $this->generateCellHousingPrices($boardCellId),
             'rentPrices' => $this->generateCellRentPrices($boardCellId),
             'purchasePrice' => $this->generatePurchasePrice($boardCellId),
@@ -405,6 +405,9 @@ class Board extends MainController{
      */
     function printBoard(){
         $this->refreshBoard();
+        echo '<div class="gameBoard">';
         echo $this->board['html'];
+        echo '</div>';
+        echo '<script>jQuery(".cell").css("height", jQuery(".cell").css("width"));</script>';
     }
 }
