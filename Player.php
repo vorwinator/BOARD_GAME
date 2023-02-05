@@ -20,10 +20,14 @@ class Player extends MainController{
 
     function generateNewPlayer($gameBoard, $playerVarName){
         $this->colorHEX = $this->generatePlayerColor();
-        $this->pawn = '<span id="'.$playerVarName.'_pawn" class="pawn" style="color:#'.$this->colorHEX.'">&#x2022;</span>';
+        $this->pawn = $this->generatePawn($playerVarName);
         $this->countAccountBalance("gameStart", $gameBoard->numberOfBoardCells);
         $this->nick = $playerVarName;
         $gameBoard->modifyCellContent(0, $this->pawn, 'insertPlayerPawn');
+    }
+
+    function generatePawn($playerVarName){
+        return '<span id="'.$playerVarName.'_pawn" class="pawn" style="color:#'.$this->colorHEX.'">&#x2022;</span>';
     }
 
     function generatePlayerColor(){
