@@ -44,7 +44,18 @@ if($_REQUEST){
             case 'ajaxCall':
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
-                        echo $gameBoard->cellDetailsHTML($_REQUEST['boardCellId'], boolval($_REQUEST['buyingPhase']), $_REQUEST['playerVarName'], ${$_REQUEST['playerVarName']});
+                        $boardCellId = $_REQUEST['boardCellId'];
+                        $playerVarName = $_REQUEST['playerVarName'];
+                        $buyingPhase = boolval($_REQUEST['buyingPhase']);
+                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerVarName, $$playerVarName);
+                        if($buyingPhase){
+                            $cellOwner = $gameBoard->getCellOwner($boardCellId);
+                            if($$playerVarName->playerId != $cellOwner AND $cellOwner != 'bank'){
+                                $rentPrice = $gameBoard->getCellCurrentRentPrice($boardCellId);
+                                $$playerVarName->countAccountBalance('substract', $rentPrice);
+                                $$cellOwner->countAccountBalance('add', $rentPrice);
+                            }
+                        }
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);

@@ -212,17 +212,17 @@ class Board extends MainController{
         $cell = $this->board['cells'][$boardCellId];
 
         $player->countAccountBalance("substract", $cell['purchasePrice']);
-        $this->changeCellOwner($player->nick, $boardCellId);
+        $this->changeCellOwner($player->playerId, $boardCellId);
         $this->changeCellBorderColor($boardCellId, $player);
     }
 
     /**
      * changes cell owner
      * @param int $boardCellId - current cell id
-     * @param string $playerNick
+     * @param string $playerId
      */
-    function changeCellOwner($playerNick = 'bank', $boardCellId){
-        $this->board['cells'][$boardCellId]['owner'] = $playerNick;
+    function changeCellOwner($playerId = 'bank', $boardCellId){
+        $this->board['cells'][$boardCellId]['owner'] = $playerId;
     }
 
     /**
@@ -232,6 +232,18 @@ class Board extends MainController{
      */
     function changeCellBorderColor($boardCellId, $player){
         $this->modifyCellContent($boardCellId, $player->colorHEX, "borderColor");
+    }
+
+    function getCellOwner($boardCellId){
+        return $this->board['cells'][$boardCellId]['owner'];
+    }
+
+    function getCellHouseLevel($boardCellId){
+        return $this->board['cells'][$boardCellId]['houseLevel'];
+    }
+
+    function getCellCurrentRentPrice($boardCellId){
+        return $this->board['cells'][$boardCellId]['rentPrices'][$this->getCellHouseLevel($boardCellId)];
     }
 
     /**
@@ -246,7 +258,7 @@ class Board extends MainController{
             $html .= "<h1>";
             $html .= $cell['name']; //TODO custom name
             $html .= " - ";
-            $html .= $cell['owner'];
+            $html .= $cell['owner'];//TODO change display to player's nick
             $html .= "</h1>";
 
             $html .= "<h2>";
