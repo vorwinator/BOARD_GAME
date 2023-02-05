@@ -409,5 +409,7 @@ class Board extends MainController{
         echo $this->board['html'];
         echo '</div>';
         echo '<script>jQuery(".cell").css("height", jQuery(".cell").css("width"));</script>';
+        echo '<script>jQuery(".board").css("width", "'.$this->square.'00px");</script>';
+        echo '<script>jQuery(".board").css("height", "'.$this->square.'00px");</script>';
     }
 }

@@ -104,9 +104,10 @@ class MainController{
 <?php
 echo Utils::menuHTML();
 echo Utils::popupWindowHTML();
-if(isset($_REQUEST['rollDice']))
-    echo Utils::initializeBuyingPhase(${"player_".$turnOfPlayer}, $gameBoard, "player_".$turnOfPlayer);
 $gameBoard->printBoard();
+if(isset($_REQUEST['rollDice'])){
+    echo Utils::initializeBuyingPhase(${"player_".$turnOfPlayer}, $gameBoard, "player_".$turnOfPlayer);
+}
 
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);
 
