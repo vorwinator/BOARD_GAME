@@ -94,6 +94,9 @@ class Utils{
         ';
     }
 
+    /**
+     * generates menu
+     */
     static function menuHTML(){
         return '
         <a href="./index.php">TEST</a>
@@ -103,6 +106,9 @@ class Utils{
         ';
     }
 
+    /**
+     * starts after roll actions
+     */
     static function initializeBuyingPhase($player, $gameBoard, $playerVarName){
         return "<script>
         var data = ".json_encode(array('playerVarName'=>$playerVarName, 'playerColor'=>$player->colorHEX, 'currentPosition'=>$player->currentPosition, 'currentCell'=>$gameBoard->board["cells"][$player->currentPosition]))."
