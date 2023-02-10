@@ -1,4 +1,9 @@
 /*START board content */
+.gameBoard{
+    width:50%;
+    overflow:auto;
+}
+
 .cell{
     border: black solid 3px;
     width: 100px;
@@ -18,15 +23,16 @@
     width:100%;
     display:flex;
     justify-content:space-evenly;
-}
-
-.gameBoard{
-    width:50%;
-    overflow:auto;
+    padding-bottom: 2rem;
 }
 
 .pageContent{
     display:flex;
+}
+
+.buttonMenu{
+    padding: 1rem;
+    border-radius: 15px;
 }
 /* page END*/
 

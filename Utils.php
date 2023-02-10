@@ -101,13 +101,13 @@ class Utils{
         return '
         <div id="mainMenu" class="mainMenu">
             <div>
-                <button onclick=\'showPopup("rollDice",2)\'>ROLL</button>
+                <button class="buttonMenu" onclick=\'showPopup("rollDice",2)\'>ROLL</button>
             </div>
             <div>
-                <button onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
+                <button class="buttonMenu" onclick=\'showPopup("startNewGame")\'>NEW GAME</button>
             </div>
             <div>
-                <a href="./index.php?resetGame"><button>RESET</button></a>
+                <a href="./index.php?resetGame"><button class="buttonMenu">RESET</button></a>
             </div>
         </div>
         ';
