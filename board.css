@@ -5,6 +5,7 @@
 }
 
 .cell{
+    cursor: pointer;
     border: black solid 3px;
     width: 100px;
 }
@@ -31,6 +32,7 @@
 }
 
 .buttonMenu{
+    cursor: pointer;
     padding: 1rem;
     border-radius: 15px;
 }
