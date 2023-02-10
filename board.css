@@ -1,7 +1,7 @@
 /*START board content */
 .gameBoard{
     width:50%;
-    overflow:auto;
+    overflow:scroll;
 }
 
 .cell{
@@ -76,9 +76,9 @@
 }
 
 .close {
-    color: #aaaaaa;
+    color: red;
     float: right;
-    font-size: 28px;
+    font-size: 50px;
     font-weight: bold;
 }
   
@@ -250,6 +250,7 @@
 
 .playerDetailsCell{
     padding-left: 1rem;
+    background-color: rgb(190, 190, 190);
 }
 
 .playerDetailLabel{

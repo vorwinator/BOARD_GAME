@@ -52,9 +52,7 @@ function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerVa
             popupContent.innerHTML = data;
             popup.style.display = "block";
             document.getElementById("cell_" + boardCellId).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-            jQuery("#popup").css('background', 'rgba(255, 255, 255, 0.8)');
-            jQuery("#popupContent").css('background', 'rgba(255, 255, 255, 0.8)');
-            jQuery("#popupContent").css("border", "none");
+            turnPopupBackgroundTransparent();
         }
     })
 }
@@ -89,6 +87,12 @@ async function showRollDice(numberOfDices, popupContent, popup) {
 function turnPopupBackgroundInvisible() {
     jQuery(".popupContent").css("background", (255, 255, 255, 0));
     jQuery(".popupContent").css("border", "none");
+}
+
+function turnPopupBackgroundTransparent() {
+    jQuery("#popup").css('background', 'rgba(255, 255, 255, 0)');
+    jQuery("#popupContent").css('background', 'rgba(255, 255, 255, 0.8)');
+    jQuery("#popupContent").css("border", "none");
 }
 
 /**
