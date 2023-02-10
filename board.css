@@ -24,6 +24,10 @@
     width:50%;
     overflow:auto;
 }
+
+.pageContent{
+    display:flex;
+}
 /* page END*/
 
 /* START player style */
@@ -221,6 +225,32 @@
     display:flex;
 }
 /* dice END */
+
+/* START players INFO */
+.playersDetails{
+    width:50%;
+    display:flex;
+    flex-wrap: wrap;
+    height:1rem;
+}
+
+.playerDetailsRow{
+    display:flex;
+    flex-direction: column;
+    border-bottom: solid 1px;
+    border-right: solid black 2px;
+    width:14rem;
+}
+
+.playerDetailsCell{
+    padding-left: 1rem;
+}
+
+.playerDetailLabel{
+    float:left;
+    width:5rem;
+}
+/* players INFO END*/
 
 /*START board content */
 #cellCenter{

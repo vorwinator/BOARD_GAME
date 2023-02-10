@@ -100,6 +100,22 @@ class MainController{
     public int $turnOfPlayer;
 
     public int $doubletsInRow;
+
+    function playersDetailsHTML(){
+        $html = '<div class="playersDetails">';
+        for($i=1; $i<=$this->numberOfPlayers; $i++){
+            $player = $this->objects['player_'.$i];
+
+            $html .= '<div class="playerDetailsRow" style="border-bottom-color: #'.$player->colorHEX.'">';
+                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Nick:</div> '.$player->nick.'</div>';
+                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Money:</div> '.$player->accountBalance.'$</div>';
+                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Cell:</div> '.$player->currentPosition.'</div>';
+                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Pawn:</div> '.$player->pawn.'</div>';
+            $html .= '</div>';
+        }
+        $html .= '</div>';
+        return $html;
+    }
 }
 ?>
 
@@ -112,10 +128,16 @@ class MainController{
 </head>
 <body>
 <div class="page">
+    <?=Utils::menuHTML();?>
+    <?=Utils::popupWindowHTML();?>
+    <div class="pageContent">
+        <?=$gameBoard->printBoard();?>
+        <?=$main->playersDetailsHTML();?>
+    </div>
+</div>
+</body>
+</html>
 <?php
-echo Utils::menuHTML();
-echo Utils::popupWindowHTML();
-$gameBoard->printBoard();
 if(isset($_REQUEST['rollDice'])){
     echo Utils::initializeBuyingPhase(${"player_".$turnOfPlayer}, $gameBoard, "player_".$turnOfPlayer);
 }
@@ -128,8 +150,3 @@ foreach($objNames as $key=>$objName){
 $_SESSION['main'] = $main;
 
 ?>
-</div>
-</body>
-
-
-</html>
