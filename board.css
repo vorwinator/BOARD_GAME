@@ -259,6 +259,17 @@
     float:left;
     width:5rem;
 }
+
+.currentTurnInfo{
+    display:flex;
+    flex-direction: column;
+    border-bottom: solid 1px;
+    border-right: solid black 2px;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    width:14rem;
+}
 /* players INFO END*/
 
 /*START board content */

@@ -102,7 +102,15 @@ class MainController{
     public int $doubletsInRow;
 
     function playersDetailsHTML(){
+        $currentPlayer = $this->objects['player_'.$this->turnOfPlayer];
+        $invertedCurrentPlayerColor = Utils::blackOrWhiteColor($currentPlayer->colorHEX);
+        $currentTurnStyle = 'background-color:#'.$currentPlayer->colorHEX.';border-color:#'.$currentPlayer->colorHEX.';color:#'.$invertedCurrentPlayerColor.';';
+
         $html = '<div class="playersDetails">';
+        $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">Currrent turn:</div>';
+        $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->nick.'</div>';
+        $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->accountBalance.'$</div>';
+        $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->currentPosition.'</div>';
         for($i=1; $i<=$this->numberOfPlayers; $i++){
             $player = $this->objects['player_'.$i];
 

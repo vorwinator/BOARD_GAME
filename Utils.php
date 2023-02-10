@@ -130,4 +130,8 @@ class Utils{
     static function sumOfDiceRolls($rollDice){
         return array_sum(explode(',',$rollDice));
     }
+    
+    static function blackOrWhiteColor($hex) {
+        return hexdec($hex) > hexdec("FFFFFF")/2? '000000': 'FFFFFF';
+    }
 }
