@@ -258,7 +258,7 @@ class Board extends MainController{
             $html .= "<h1>";
             $html .= $cell['name']; //TODO custom name
             $html .= " - ";
-            $html .= $cell['owner'];//TODO change display to player's nick
+            $html .= $cell['owner'];
             $html .= "</h1>";
 
             $html .= "<h2>";

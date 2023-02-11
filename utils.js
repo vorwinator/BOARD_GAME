@@ -176,7 +176,6 @@ function buyCellPrompt(boardCellId, playerVarName, cellName, cellPurchasePrice) 
     }
 }
 
-//TODO
 window.onclick = function(event) {
     var popup = document.getElementById("popup");
     var buyingPhase = document.getElementsByClassName("buyingPhase").length;
