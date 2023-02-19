@@ -72,7 +72,7 @@ class Board extends GameType{
             'purchasePrice' => $this->generatePurchasePrice($boardCellId),
             'name' => isset($this->gameType['cells'][$boardCellId]['name'])?$this->gameType['cells'][$boardCellId]['name'] :"Cell_".$boardCellId,
             'owner' => 'bank',
-            'owner_nickname' => 'bank',
+            'ownerNickname' => 'bank',
             'houseLevel' => 0,
             // 'extraRules' => $this->generateCellExtraRules($boardCellId),
         );
@@ -225,7 +225,7 @@ class Board extends GameType{
      */
     function changeCellOwner($playerId = 'bank', $boardCellId, $playerNick = null){
         $this->board['cells'][$boardCellId]['owner'] = $playerId;
-        $this->board['cells'][$boardCellId]['owner_nickname'] = $playerNick == null? $playerId: $playerNick;
+        $this->board['cells'][$boardCellId]['ownerNickname'] = $playerNick == null? $playerId: $playerNick;
     }
 
     /**
@@ -261,7 +261,7 @@ class Board extends GameType{
             $html .= "<h1>";
             $html .= $cell['name'];
             $html .= " - ";
-            $html .= $cell['owner_nickname'];
+            $html .= $cell['ownerNickname'];
             $html .= "</h1>";
 
             $html .= "<h2>";
