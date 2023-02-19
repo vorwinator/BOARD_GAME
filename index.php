@@ -1,4 +1,5 @@
 <?php
+require_once("./GameType.php");
 require_once("./Board.php");
 require_once("./Player.php");
 require_once("./Utils.php");
@@ -47,7 +48,7 @@ if($_REQUEST){
                         $boardCellId = $_REQUEST['boardCellId'];
                         $playerVarName = $_REQUEST['playerVarName'];
                         $buyingPhase = boolval($_REQUEST['buyingPhase']);
-                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerVarName, $$playerVarName);
+                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerVarName, @$$playerVarName);
                         if($buyingPhase){
                             $cellOwner = $gameBoard->getCellOwner($boardCellId);
                             if($$playerVarName->playerId != $cellOwner AND $cellOwner != 'bank'){
