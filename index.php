@@ -106,6 +106,8 @@ class MainController{
         $currentPlayer = $this->objects['player_'.$this->turnOfPlayer];
         $invertedCurrentPlayerColor = Utils::blackOrWhiteColor($currentPlayer->colorHEX);
         $currentTurnStyle = 'background-color:#'.$currentPlayer->colorHEX.';border-color:#'.$currentPlayer->colorHEX.';color:#'.$invertedCurrentPlayerColor.';';
+        
+        $cells = $this->objects['gameBoard']->board['cells'];
 
         $html = '<div class="playersDetails">';
         $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">Currrent turn:</div>';
@@ -116,10 +118,10 @@ class MainController{
             $player = $this->objects['player_'.$i];
 
             $html .= '<div class="playerDetailsRow" style="border-bottom-color: #'.$player->colorHEX.'">';
-                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Nick:</div> '.$player->nick.'</div>';
-                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Money:</div> '.$player->accountBalance.'$</div>';
-                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Cell:</div> '.$player->currentPosition.'</div>';
-                $html .= '<div class="playerDetailsCell"><div class="playerDetailLabel">Pawn:</div> '.$player->pawn.'</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_nick"><div class="playerDetailLabel">Nick:</div> '.$player->nick.'</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_money"><div class="playerDetailLabel">Money:</div> '.$player->accountBalance.'$</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_position"><div class="playerDetailLabel">Position:</div> '.$cells[$player->currentPosition]['name'].'</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_pawn"><div class="playerDetailLabel">Pawn:</div> '.$player->pawn.'</div>';
             $html .= '</div>';
         }
         $html .= '</div>';
