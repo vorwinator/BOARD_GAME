@@ -13,6 +13,8 @@ class Board extends GameType{
 
     public int $numberOfBoardCells = 36;
 
+    public int $passStartBonus = 500;
+
     public $gameType = array('standard'); //base for custom gameplays
 
     /**
@@ -201,7 +203,7 @@ class Board extends GameType{
      */
     function changePlayerPosition($player, $rollResult){
         $this->modifyCellContent($player->currentPosition, $player->pawn, 'remove');
-        $player->currentPosition = Utils::countNextPosition($rollResult, $this->numberOfBoardCells, $player->currentPosition); 
+        $player->currentPosition = Utils::countNextPosition($rollResult, $this->numberOfBoardCells, $player->currentPosition);
         $this->modifyCellContent($player->currentPosition, $player->pawn, 'insertPlayerPawn');
     }
 

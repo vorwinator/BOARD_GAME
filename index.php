@@ -80,7 +80,11 @@ if($_REQUEST){
             case 'rollDice':
                 $playerId = "player_".$turnOfPlayer;
 
-                $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
+                $positionBeforeRoll = $$playerId->currentPosition;
+                $gameBoard->changePlayerPosition($$playerId, 30);
+                if($$playerId->currentPosition < $positionBeforeRoll){
+                    $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
+                }
 
                 $doublet = Utils::checkForDoublet($_REQUEST['rollDice']);
 
