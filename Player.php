@@ -18,14 +18,14 @@ class Player extends MainController{
 
     public string $nick;
 
-    public string $playerId;
+    public string $id;
 
     function generateNewPlayer($gameBoard, $playerVarName){
         $this->colorHEX = $this->generatePlayerColor();
         $this->pawn = $this->generatePawn($playerVarName);
         $this->countAccountBalance("gameStart", $gameBoard->numberOfBoardCells);
         $this->nick = $playerVarName;
-        $this->playerId = $playerVarName;
+        $this->id = $playerVarName;
         $gameBoard->modifyCellContent(0, $this->pawn, 'insertPlayerPawn');
     }
 

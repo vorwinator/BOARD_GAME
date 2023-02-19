@@ -51,7 +51,7 @@ if($_REQUEST){
                         echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerVarName, @$$playerVarName);
                         if($buyingPhase){
                             $cellOwner = $gameBoard->getCellOwner($boardCellId);
-                            if($$playerVarName->playerId != $cellOwner AND $cellOwner != 'bank'){
+                            if($$playerVarName->id != $cellOwner AND $cellOwner != 'bank'){
                                 $rentPrice = $gameBoard->getCellCurrentRentPrice($boardCellId);
                                 $$playerVarName->countAccountBalance('substract', $rentPrice);
                                 $$cellOwner->countAccountBalance('add', $rentPrice);

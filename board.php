@@ -213,7 +213,7 @@ class Board extends GameType{
         $cell = $this->board['cells'][$boardCellId];
 
         $player->countAccountBalance("substract", $cell['purchasePrice']);
-        $this->changeCellOwner($player->playerId, $boardCellId);
+        $this->changeCellOwner($player->id, $boardCellId);
         $this->changeCellBorderColor($boardCellId, $player);
     }
 
