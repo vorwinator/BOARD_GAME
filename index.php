@@ -81,7 +81,7 @@ if($_REQUEST){
                 $playerId = "player_".$turnOfPlayer;
 
                 $positionBeforeRoll = $$playerId->currentPosition;
-                $gameBoard->changePlayerPosition($$playerId, 30);
+                $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
                 if($$playerId->currentPosition < $positionBeforeRoll){
                     $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
                 }
