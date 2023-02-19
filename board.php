@@ -72,6 +72,7 @@ class Board extends GameType{
             'purchasePrice' => $this->generatePurchasePrice($boardCellId),
             'name' => isset($this->gameType['cells'][$boardCellId]['name'])?$this->gameType['cells'][$boardCellId]['name'] :"Cell_".$boardCellId,
             'owner' => 'bank',
+            'owner_nickname' => 'bank',
             'houseLevel' => 0,
             // 'extraRules' => $this->generateCellExtraRules($boardCellId),
         );
@@ -213,7 +214,7 @@ class Board extends GameType{
         $cell = $this->board['cells'][$boardCellId];
 
         $player->countAccountBalance("substract", $cell['purchasePrice']);
-        $this->changeCellOwner($player->id, $boardCellId);
+        $this->changeCellOwner($player->id, $boardCellId, $player->nick);
         $this->changeCellBorderColor($boardCellId, $player);
     }
 
@@ -222,8 +223,9 @@ class Board extends GameType{
      * @param int $boardCellId - current cell id
      * @param string $playerId
      */
-    function changeCellOwner($playerId = 'bank', $boardCellId){
+    function changeCellOwner($playerId = 'bank', $boardCellId, $playerNick = null){
         $this->board['cells'][$boardCellId]['owner'] = $playerId;
+        $this->board['cells'][$boardCellId]['owner_nickname'] = $playerNick == null? $playerId: $playerNick;
     }
 
     /**
@@ -257,9 +259,9 @@ class Board extends GameType{
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
         $html .= "<div>";
             $html .= "<h1>";
-            $html .= $cell['name']; //TODO custom name
+            $html .= $cell['name'];
             $html .= " - ";
-            $html .= $cell['owner'];
+            $html .= $cell['owner_nickname'];
             $html .= "</h1>";
 
             $html .= "<h2>";
