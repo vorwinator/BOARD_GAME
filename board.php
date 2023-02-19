@@ -195,13 +195,13 @@ class Board extends GameType{
     }
 
     /**
-     * @param object $playerId
+     * @param object $player
      * @param int $rollResult - sum of all rolls
      */
-    function changePlayerPosition($playerId, $rollResult){
-        $this->modifyCellContent($playerId->currentPosition, $playerId->pawn, 'remove');
-        $playerId->currentPosition = Utils::countNextPosition($rollResult, $this->numberOfBoardCells, $playerId->currentPosition); 
-        $this->modifyCellContent($playerId->currentPosition, $playerId->pawn, 'insertPlayerPawn');
+    function changePlayerPosition($player, $rollResult){
+        $this->modifyCellContent($player->currentPosition, $player->pawn, 'remove');
+        $player->currentPosition = Utils::countNextPosition($rollResult, $this->numberOfBoardCells, $player->currentPosition); 
+        $this->modifyCellContent($player->currentPosition, $player->pawn, 'insertPlayerPawn');
     }
 
     /**
