@@ -269,7 +269,7 @@ class Board extends GameType{
             $html .= $cell['purchasePrice'].'$';
             if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerId){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
-                $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerId.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+                $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
