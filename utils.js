@@ -54,7 +54,7 @@ function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerId
             popup.style.display = "block";
             document.getElementById("cell_" + boardCellId).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
             turnPopupBackgroundTransparent();
-            if (typeof response.accountBalanceChanges != undefined) {
+            if (typeof response.accountBalanceChanges != "undefined") {
                 showAccountBalanceChange("substract", response.accountBalanceChanges.number, response.accountBalanceChanges.playerId);
                 showAccountBalanceChange("add", response.accountBalanceChanges.number, response.accountBalanceChanges.cellOwner);
             }
