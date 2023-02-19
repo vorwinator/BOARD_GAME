@@ -264,10 +264,10 @@ class Board extends GameType{
 
             $html .= "<h2>";
             $html .= "Purchase price: ";
-            $html .= $cell['purchasePrice']."$";
+            $html .= $cell['purchasePrice'].'$';
             if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerVarName){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
-                $html .= '$ - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+                $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
