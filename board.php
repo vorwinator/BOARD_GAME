@@ -5,7 +5,7 @@
  * @var int $numberOfBoardCells - contains number of cells on which players move around 
  * @author Roman Mohyła
  */
-class Board extends MainController{
+class Board extends GameType{
 
     public array $board;
 
@@ -13,12 +13,13 @@ class Board extends MainController{
 
     public int $numberOfBoardCells = 36;
 
-    public string $gameType = 'standard'; //base for custom gameplays
+    public $gameType = array('standard'); //base for custom gameplays
 
     /**
      * Generates new board for new game - should be run only once at the beginning of the game
      */
     function generateNewBoard(){
+        $this->gameType['cells'] = $this->prepareGameType();
         if($this->square < 3) $this->square = 3;
         $boardCellId = 0;
         $leftLine = $this->numberOfBoardCells-1;
@@ -69,7 +70,7 @@ class Board extends MainController{
             'housingPrices' => $this->generateCellHousingPrices($boardCellId),
             'rentPrices' => $this->generateCellRentPrices($boardCellId),
             'purchasePrice' => $this->generatePurchasePrice($boardCellId),
-            'name' => "Cell_".$boardCellId,
+            'name' => isset($this->gameType['cells'][$boardCellId]['name'])?$this->gameType['cells'][$boardCellId]['name'] :"Cell_".$boardCellId,
             'owner' => 'bank',
             'houseLevel' => 0,
             // 'extraRules' => $this->generateCellExtraRules($boardCellId),
@@ -263,7 +264,7 @@ class Board extends MainController{
 
             $html .= "<h2>";
             $html .= "Purchase price: ";
-            $html .= $cell['purchasePrice'];
+            $html .= $cell['purchasePrice']."$";
             if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerVarName){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
                 $html .= '$ - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
