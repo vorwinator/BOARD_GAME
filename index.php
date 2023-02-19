@@ -169,6 +169,5 @@ foreach($objNames as $key=>$objName){
     $main->objects[$objName] = $$objName;
 }
 $_SESSION['main'] = $main;
-// echo '<script>showAccountBalanceChange("add","100","player_1")</script>';
 
 ?>
