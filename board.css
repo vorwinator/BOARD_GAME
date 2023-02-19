@@ -272,6 +272,14 @@
 }
 /* players INFO END*/
 
+.failText{
+    color: red;
+}
+
+.successText{
+    color: green;
+}
+
 /*START board content */
 #cellCenter{
     border: black solid 3px;

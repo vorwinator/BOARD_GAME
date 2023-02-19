@@ -48,15 +48,21 @@ if($_REQUEST){
                         $boardCellId = $_REQUEST['boardCellId'];
                         $playerId = $_REQUEST['playerId'];
                         $buyingPhase = boolval($_REQUEST['buyingPhase']);
-                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
+                        $output['html'] = $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
                         if($buyingPhase){
                             $cellOwner = $gameBoard->getCellOwner($boardCellId);
                             if($playerId != $cellOwner AND $cellOwner != 'bank'){
                                 $rentPrice = $gameBoard->getCellCurrentRentPrice($boardCellId);
                                 $$playerId->countAccountBalance('substract', $rentPrice);
                                 $$cellOwner->countAccountBalance('add', $rentPrice);
+                                $output['accountBalanceChanges'] = array(
+                                    'playerId' => $playerId,
+                                    'cellOwner' => $cellOwner,
+                                    'number' => $rentPrice
+                                );
                             }
                         }
+                        echo json_encode($output);
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
@@ -118,10 +124,10 @@ class MainController{
             $player = $this->objects['player_'.$i];
 
             $html .= '<div class="playerDetailsRow" style="border-bottom-color: #'.$player->colorHEX.'">';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_nick"><div class="playerDetailLabel">Nick:</div> '.$player->nick.'</div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_money"><div class="playerDetailLabel">Money:</div> '.$player->accountBalance.'$</div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_position"><div class="playerDetailLabel">Position:</div> '.$cells[$player->currentPosition]['name'].'</div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_pawn"><div class="playerDetailLabel">Pawn:</div> '.$player->pawn.'</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_nick"><div class="playerDetailLabel">Nick:</div> <span>'.$player->nick.'</span></div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_money"><div class="playerDetailLabel">Money:</div> <span>'.$player->accountBalance.'</span>$</div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_position"><div class="playerDetailLabel">Position:</div> <span>'.$cells[$player->currentPosition]['name'].'</span></div>';
+                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_pawn"><div class="playerDetailLabel">Pawn:</div> <span>'.$player->pawn.'</span></div>';
             $html .= '</div>';
         }
         $html .= '</div>';
@@ -159,5 +165,6 @@ foreach($objNames as $key=>$objName){
     $main->objects[$objName] = $$objName;
 }
 $_SESSION['main'] = $main;
+// echo '<script>showAccountBalanceChange("add","100","player_1")</script>';
 
 ?>

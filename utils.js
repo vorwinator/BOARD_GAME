@@ -48,11 +48,16 @@ function showStartNewGame(popupContent, popup) {
 function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerId = null) {
     jQuery.ajax({
         url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase + '&playerId=' + playerId,
-        success: function (data) {
-            popupContent.innerHTML = data;
+        dataType: 'json',
+        success: function (response, result) {
+            popupContent.innerHTML = response.html;
             popup.style.display = "block";
             document.getElementById("cell_" + boardCellId).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
             turnPopupBackgroundTransparent();
+            if (typeof response.accountBalanceChanges != undefined) {
+                showAccountBalanceChange("substract", response.accountBalanceChanges.number, response.accountBalanceChanges.playerId);
+                showAccountBalanceChange("add", response.accountBalanceChanges.number, response.accountBalanceChanges.cellOwner);
+            }
         }
     })
 }
@@ -173,6 +178,17 @@ async function rollDice(rollResult, id) {
 function buyCellPrompt(boardCellId, playerId, cellName, cellPurchasePrice) {
     if (confirm('You are going to buy ' + cellName + ' for a ' + cellPurchasePrice + '$')) {
         redirectLikeLink('./index.php?buyCell&boardCellId=' + boardCellId + '&playerId=' + playerId, 1);
+    }
+}
+
+function showAccountBalanceChange(mode, number, playerId) {
+    switch (mode) {
+        case 'substract':
+            document.getElementById(playerId + '_money').children[1].innerHTML += "<span class='failText'> - "+number+"</span>"; 
+            break;
+        case 'add':
+            document.getElementById(playerId + '_money').children[1].innerHTML += "<span class='successText'> + "+number+"</span>";
+            break;
     }
 }
 
