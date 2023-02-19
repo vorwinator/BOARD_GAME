@@ -253,7 +253,7 @@ class Board extends GameType{
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
      */
-    function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerVarName = null, $player = null){
+    function cellDetailsHTML($boardCellId, $buyingPhase = false, $playerId = null, $player = null){
         $cell = $this->board['cells'][$boardCellId];
 
         $html = '<span class="close" onclick="closePopup();">&times;</span>';
@@ -267,9 +267,9 @@ class Board extends GameType{
             $html .= "<h2>";
             $html .= "Purchase price: ";
             $html .= $cell['purchasePrice'].'$';
-            if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerVarName){
+            if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerId){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
-                $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerVarName.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+                $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerId.'\', \''.$cell['name'].'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
             }
             $html .= "</h2>";
 
@@ -301,7 +301,7 @@ class Board extends GameType{
                 else
                     $html .= $key.' => '.$price.'$';
 
-                if($buyingPhase && $cell['owner'] == $playerVarName && $key > $cell['houseLevel']){
+                if($buyingPhase && $cell['owner'] == $playerId && $key > $cell['houseLevel']){
                     $html .= ' - <button onclick="">Buy</button><br>';
                 }
                 else 

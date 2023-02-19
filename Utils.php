@@ -116,9 +116,9 @@ class Utils{
     /**
      * starts after roll actions
      */
-    static function initializeBuyingPhase($player, $gameBoard, $playerVarName){
+    static function initializeBuyingPhase($player, $gameBoard, $playerId){
         return "<script>
-        var data = ".json_encode(array('playerVarName'=>$playerVarName, 'playerColor'=>$player->colorHEX, 'currentPosition'=>$player->currentPosition, 'currentCell'=>$gameBoard->board["cells"][$player->currentPosition]))."
+        var data = ".json_encode(array('playerId'=>$playerId, 'playerColor'=>$player->colorHEX, 'currentPosition'=>$player->currentPosition, 'currentCell'=>$gameBoard->board["cells"][$player->currentPosition]))."
         showPopup('buyingPhase', data);
         </script>";
     }

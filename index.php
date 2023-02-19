@@ -29,9 +29,9 @@ else{
     $main->numberOfPlayers = $numberOfPlayers = $_REQUEST['numberOfPlayers'];
     
     for($i=1;$i<=$main->numberOfPlayers;$i++){
-        $playerVarName = "player_".$i;
-        $main->objects[$playerVarName] = $$playerVarName = new Player;
-        $$playerVarName->generateNewPlayer($gameBoard, $playerVarName);
+        $playerId = "player_".$i;
+        $main->objects[$playerId] = $$playerId = new Player;
+        $$playerId->generateNewPlayer($gameBoard, $playerId);
     }
 
     $main->turnOfPlayer = $turnOfPlayer = 1;
@@ -46,14 +46,14 @@ if($_REQUEST){
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
                         $boardCellId = $_REQUEST['boardCellId'];
-                        $playerVarName = $_REQUEST['playerVarName'];
+                        $playerId = $_REQUEST['playerId'];
                         $buyingPhase = boolval($_REQUEST['buyingPhase']);
-                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerVarName, @$$playerVarName);
+                        echo $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
                         if($buyingPhase){
                             $cellOwner = $gameBoard->getCellOwner($boardCellId);
-                            if($$playerVarName->id != $cellOwner AND $cellOwner != 'bank'){
+                            if($playerId != $cellOwner AND $cellOwner != 'bank'){
                                 $rentPrice = $gameBoard->getCellCurrentRentPrice($boardCellId);
-                                $$playerVarName->countAccountBalance('substract', $rentPrice);
+                                $$playerId->countAccountBalance('substract', $rentPrice);
                                 $$cellOwner->countAccountBalance('add', $rentPrice);
                             }
                         }
@@ -72,9 +72,9 @@ if($_REQUEST){
                 header('Location: ./index.php?numberOfPlayers='.$main->numberOfPlayers);
                 break;
             case 'rollDice':
-                $playerVarName = "player_".$turnOfPlayer;
+                $playerId = "player_".$turnOfPlayer;
 
-                $gameBoard->changePlayerPosition($$playerVarName, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
+                $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
 
                 $doublet = Utils::checkForDoublet($_REQUEST['rollDice']);
 
@@ -84,7 +84,7 @@ if($_REQUEST){
                 else $main->doubletsInRow++;
                 break;
             case 'buyCell':
-                $gameBoard->purchaseCell($_REQUEST['boardCellId'], ${$_REQUEST['playerVarName']});
+                $gameBoard->purchaseCell($_REQUEST['boardCellId'], ${$_REQUEST['playerId']});
                 break;
         }
     }

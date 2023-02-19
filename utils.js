@@ -17,7 +17,7 @@ function showPopup(popupType, data) {
             showStartNewGame(popupContent, popup);
             break;
         case 'buyingPhase':
-            showCellDetails(data.currentPosition, popupContent, popup, 1, data.playerVarName);
+            showCellDetails(data.currentPosition, popupContent, popup, 1, data.playerId);
             break;
     }
 }
@@ -43,11 +43,11 @@ function showStartNewGame(popupContent, popup) {
  * @param {object} popupContent - content
  * @param {object} popup - background
  * @param {boolean} buyingPhase - enable/disable buttons to buy
- * @param {string} playerVarName - name of player object in main controller
+ * @param {string} playerId - name of player object in main controller
  */
-function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerVarName = null) {
+function showCellDetails(boardCellId, popupContent, popup, buyingPhase, playerId = null) {
     jQuery.ajax({
-        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase + '&playerVarName=' + playerVarName,
+        url: './index.php?ajaxCall=showCellDetails&boardCellId=' + boardCellId + '&buyingPhase=' + buyingPhase + '&playerId=' + playerId,
         success: function (data) {
             popupContent.innerHTML = data;
             popup.style.display = "block";
@@ -166,13 +166,13 @@ async function rollDice(rollResult, id) {
 /**
  * Confirmation popup to purchase cell
  * @param {int} boardCellId 
- * @param {string} playerVarName 
+ * @param {string} playerId 
  * @param {string} cellName 
  * @param {float} cellPurchasePrice 
  */
-function buyCellPrompt(boardCellId, playerVarName, cellName, cellPurchasePrice) {
+function buyCellPrompt(boardCellId, playerId, cellName, cellPurchasePrice) {
     if (confirm('You are going to buy ' + cellName + ' for a ' + cellPurchasePrice + '$')) {
-        redirectLikeLink('./index.php?buyCell&boardCellId=' + boardCellId + '&playerVarName=' + playerVarName, 1);
+        redirectLikeLink('./index.php?buyCell&boardCellId=' + boardCellId + '&playerId=' + playerId, 1);
     }
 }
 
