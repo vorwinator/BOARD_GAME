@@ -48,21 +48,21 @@ if($_REQUEST){
                         $boardCellId = $_REQUEST['boardCellId'];
                         $playerId = $_REQUEST['playerId'];
                         $buyingPhase = boolval($_REQUEST['buyingPhase']);
-                        $output['html'] = $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
+                        $response['html'] = $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
                         if($buyingPhase){
                             $cellOwner = $gameBoard->getCellOwner($boardCellId);
                             if($playerId != $cellOwner AND $cellOwner != 'bank'){
                                 $rentPrice = $gameBoard->getCellCurrentRentPrice($boardCellId);
                                 $$playerId->countAccountBalance('substract', $rentPrice);
                                 $$cellOwner->countAccountBalance('add', $rentPrice);
-                                $output['accountBalanceChanges'] = array(
+                                $response['accountBalanceChanges'] = array(
                                     'playerId' => $playerId,
                                     'cellOwner' => $cellOwner,
                                     'number' => $rentPrice
                                 );
                             }
                         }
-                        echo json_encode($output);
+                        echo json_encode($response);
                         exit();
                     case 'showRollDice':
                         $data = $gameBoard->prepareDiceHTML($_REQUEST['numberOfDices']);
