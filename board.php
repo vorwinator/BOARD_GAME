@@ -126,7 +126,7 @@ class Board extends GameType{
         return 
         $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90 == 0?
             $lineMultiplier * $boardCellMultiplier /180:
-                $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
+                5 * $lineMultiplier * $houseMultiplier * $boardCellMultiplier /90;
     }
 
     /**
@@ -251,6 +251,20 @@ class Board extends GameType{
         return $this->board['cells'][$boardCellId]['rentPrices'][$this->getCellHouseLevel($boardCellId)];
     }
 
+    function purchaseHouse($boardCellId, $player, $houseLevel){
+        $player->countAccountBalance('substract', $this->getPurchaseHousePrice($boardCellId, $houseLevel));
+        $this->board['cells'][$boardCellId]['houseLevel'] = $houseLevel;
+    }
+
+    function getPurchaseHousePrice($boardCellId, $houseLevel){
+        $cell = $this->board['cells'][$boardCellId];
+        $price = 0;
+        for($i = $houseLevel; $i > $cell['houseLevel']; $i--){
+            $price += $cell['housingPrices'][$i];
+        }
+        return $price;
+    }
+
     /**
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
@@ -295,16 +309,19 @@ class Board extends GameType{
             $html .= "</h2>";
             $html .= '<div class="subListPopup">';
             foreach($cell['housingPrices'] as $key=>$price){
+                $price = $this->getPurchaseHousePrice($boardCellId, $key);
+                $displayPrice = $price;
+                $price == 0? $displayPrice = 'Done': $displayPrice .= "$";
                 if($key == $cell['houseLevel']){
                     $html .= '<b>';
-                    $html .= $key.' => '.$price;
-                    $html .= '$</b>';
+                    $html .= $key.' => '.$displayPrice;
+                    $html .= '</b>';
                 }
                 else
-                    $html .= $key.' => '.$price.'$';
+                    $html .= $key.' => '.$displayPrice;
 
                 if($buyingPhase && $cell['owner'] == $playerId && $key > $cell['houseLevel']){
-                    $html .= ' - <button onclick="">Buy</button><br>';
+                    $html .= ' - <button class="buyingPhase" onclick="buyHousePrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$price.', '.$key.')">Buy</button><br>';
                 }
                 else 
                     $html .= '<br>';

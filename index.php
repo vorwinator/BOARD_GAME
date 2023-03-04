@@ -26,7 +26,7 @@ else{
     $main->objects['gameBoard'] = $gameBoard = new Board;
     $gameBoard->generateNewBoard();
 
-    $main->numberOfPlayers = $numberOfPlayers = $_REQUEST['numberOfPlayers'];
+    $main->numberOfPlayers = $numberOfPlayers = isset($_REQUEST['numberOfPlayers'])? $_REQUEST['numberOfPlayers']: 20;
     
     for($i=1;$i<=$main->numberOfPlayers;$i++){
         $playerId = "player_".$i;
@@ -82,6 +82,7 @@ if($_REQUEST){
 
                 $positionBeforeRoll = $$playerId->currentPosition;
                 $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
+                // $gameBoard->changePlayerPosition($$playerId, 36); //debug
                 if($$playerId->currentPosition < $positionBeforeRoll){
                     $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
                 }
@@ -95,6 +96,9 @@ if($_REQUEST){
                 break;
             case 'buyCell':
                 $gameBoard->purchaseCell($_REQUEST['boardCellId'], ${$_REQUEST['playerId']});
+                break;
+            case 'buyHouse':
+                $gameBoard->purchaseHouse($_REQUEST['boardCellId'], ${$_REQUEST['playerId']}, $_REQUEST['houseLevel']);
                 break;
         }
     }

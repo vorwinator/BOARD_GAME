@@ -181,6 +181,19 @@ function buyCellPrompt(boardCellId, playerId, cellName, cellPurchasePrice) {
     }
 }
 
+/**
+ * Confirmation popup to purchase house
+ * @param {int} boardCellId 
+ * @param {string} playerId 
+ * @param {string} cellName 
+ * @param {float} housePurchasePrice 
+ */
+function buyHousePrompt(boardCellId, playerId, cellName, housePurchasePrice, houseLevel) {
+    if (confirm('You are going to buy house level: ' + houseLevel + ' in ' + cellName + ' for a ' + housePurchasePrice + '$')) {
+        redirectLikeLink('./index.php?buyHouse&boardCellId=' + boardCellId + '&playerId=' + playerId + '&houseLevel=' + houseLevel, 1);
+    }
+}
+
 function showAccountBalanceChange(mode, number, playerId) {
     switch (mode) {
         case 'substract':
