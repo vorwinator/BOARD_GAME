@@ -81,10 +81,15 @@ if($_REQUEST){
                 $playerId = "player_".$turnOfPlayer;
 
                 $positionBeforeRoll = $$playerId->currentPosition;
-                // $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
-                $gameBoard->changePlayerPosition($$playerId, 36); //debug
-                if($$playerId->currentPosition < $positionBeforeRoll){
-                    $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
+                $_REQUEST['rollDice'] = '70,0';//debug
+                $sumOfDiceRolls = Utils::sumOfDiceRolls($_REQUEST['rollDice']);
+                $numberOfLoops = intval($sumOfDiceRolls / $gameBoard->numberOfBoardCells);
+                $newPosition = $sumOfDiceRolls - $numberOfLoops * $gameBoard->numberOfBoardCells;
+                $gameBoard->changePlayerPosition($$playerId, $newPosition);
+                if($$playerId->currentPosition < $positionBeforeRoll || $sumOfDiceRolls >= $gameBoard->numberOfBoardCells){
+                    for($i=0; $i<$numberOfLoops; $i++){
+                        $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
+                    }
                 }
 
                 $doublet = Utils::checkForDoublet($_REQUEST['rollDice']);
