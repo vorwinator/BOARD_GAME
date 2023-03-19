@@ -182,6 +182,19 @@ function buyCellPrompt(boardCellId, playerId, cellName, cellPurchasePrice) {
 }
 
 /**
+ * Confirmation popup to sell cell
+ * @param {int} boardCellId 
+ * @param {string} playerId 
+ * @param {string} cellName 
+ * @param {float} cellSellPrice 
+ */
+function sellCellPrompt(boardCellId, playerId, cellName, cellSellPrice) {
+    if (confirm('You are going to sell ' + cellName + ' and all houses in there for a ' + cellSellPrice + '$')) {
+        redirectLikeLink('./index.php?sellCell&boardCellId=' + boardCellId + '&playerId=' + playerId, 1);
+    }
+}
+
+/**
  * Confirmation popup to purchase house
  * @param {int} boardCellId 
  * @param {string} playerId 
@@ -191,6 +204,19 @@ function buyCellPrompt(boardCellId, playerId, cellName, cellPurchasePrice) {
 function buyHousePrompt(boardCellId, playerId, cellName, housePurchasePrice, houseLevel) {
     if (confirm('You are going to buy house level: ' + houseLevel + ' in ' + cellName + ' for a ' + housePurchasePrice + '$')) {
         redirectLikeLink('./index.php?buyHouse&boardCellId=' + boardCellId + '&playerId=' + playerId + '&houseLevel=' + houseLevel, 1);
+    }
+}
+
+/**
+ * Confirmation popup to sell house
+ * @param {int} boardCellId 
+ * @param {string} playerId 
+ * @param {string} cellName 
+ * @param {float} housesSellPrice 
+ */
+function sellHousePrompt(boardCellId, playerId, cellName, housesSellPrice, houseLevel) {
+    if (confirm('You are going to sell house level: ' + houseLevel + ' and all houses above that level in ' + cellName + ' for a ' + housesSellPrice + '$')) {
+        redirectLikeLink('./index.php?sellHouse&boardCellId=' + boardCellId + '&playerId=' + playerId + '&houseLevel=' + houseLevel, 1);
     }
 }
 

@@ -46,7 +46,7 @@ if($_REQUEST){
                 switch($_REQUEST['ajaxCall']){
                     case 'showCellDetails':
                         $boardCellId = $_REQUEST['boardCellId'];
-                        $playerId = $_REQUEST['playerId'];
+                        $playerId = $_REQUEST['playerId'] == 'null'? 'player_'.$main->turnOfPlayer: $_REQUEST['playerId'];
                         $buyingPhase = boolval($_REQUEST['buyingPhase']);
                         $response['html'] = $gameBoard->cellDetailsHTML($boardCellId, $buyingPhase, $playerId, @$$playerId);
                         if($buyingPhase){
@@ -81,8 +81,8 @@ if($_REQUEST){
                 $playerId = "player_".$turnOfPlayer;
 
                 $positionBeforeRoll = $$playerId->currentPosition;
-                $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
-                // $gameBoard->changePlayerPosition($$playerId, 36); //debug
+                // $gameBoard->changePlayerPosition($$playerId, Utils::sumOfDiceRolls($_REQUEST['rollDice']));
+                $gameBoard->changePlayerPosition($$playerId, 36); //debug
                 if($$playerId->currentPosition < $positionBeforeRoll){
                     $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
                 }
@@ -97,8 +97,14 @@ if($_REQUEST){
             case 'buyCell':
                 $gameBoard->purchaseCell($_REQUEST['boardCellId'], ${$_REQUEST['playerId']});
                 break;
+            case 'sellCell':
+                $gameBoard->sellCell($_REQUEST['boardCellId'], ${$_REQUEST['playerId']});
+                break;
             case 'buyHouse':
                 $gameBoard->purchaseHouse($_REQUEST['boardCellId'], ${$_REQUEST['playerId']}, $_REQUEST['houseLevel']);
+                break;
+            case 'sellHouse':
+                $gameBoard->sellHouse($_REQUEST['boardCellId'], ${$_REQUEST['playerId']}, $_REQUEST['houseLevel']);
                 break;
         }
     }

@@ -265,6 +265,37 @@ class Board extends GameType{
         return $price;
     }
 
+    function getCellSellPrice($boardCellId){
+        $cell = $this->board['cells'][$boardCellId];
+        $price = 0;
+        for($i = 1; $i <= $cell['houseLevel']; $i++){
+            $price += $cell['housingPrices'][$i];
+        }
+        return ($price + $cell['purchasePrice'])/2;
+    }
+
+    function getSellHousePrice($boardCellId, $houseLevel){
+        $cell = $this->board['cells'][$boardCellId];
+        $price = 0;
+        for($i = $houseLevel; $i <= $cell['houseLevel']; $i++){
+            $price += $cell['housingPrices'][$i];
+        }
+        return $price/2;
+    }
+
+    function sellHouse($boardCellId, $player, $houseLevel){
+        $player->countAccountBalance('add', $this->getSellHousePrice($boardCellId, $houseLevel));
+        $this->board['cells'][$boardCellId]['houseLevel'] = $houseLevel-1;
+    }
+
+    function sellCell($boardCellId, $player){
+        $cell = $this->board['cells'][$boardCellId];
+
+        $player->countAccountBalance("add", $cell['purchasePrice']);
+        $this->changeCellOwner('bank', $boardCellId, 'bank');
+        $this->changeCellBorderColor($boardCellId, $player);
+    }
+
     /**
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
@@ -286,6 +317,9 @@ class Board extends GameType{
             if($buyingPhase && $cell['owner'] == "bank" && $cell['owner'] != $playerId){
                 $disabled = $player->accountBalance < $cell['purchasePrice']? "disabled": "";
                 $html .= ' - <button class="buyingPhase" onclick="buyCellPrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$cell['purchasePrice'].')" '.$disabled.'>Buy</button><br>';
+            }
+            elseif($cell['owner'] == $playerId){
+                $html .= ' - <button class="buyingPhase" onclick="sellCellPrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$this->getCellSellPrice($boardCellId).')">Sell</button><br>';
             }
             $html .= "</h2>";
 
@@ -311,7 +345,13 @@ class Board extends GameType{
             foreach($cell['housingPrices'] as $key=>$price){
                 $price = $this->getPurchaseHousePrice($boardCellId, $key);
                 $displayPrice = $price;
-                $price == 0? $displayPrice = 'Done': $displayPrice .= "$";
+                if($price == 0){
+                    $price = $this->getSellHousePrice($boardCellId, $key);
+                    $displayPrice = 'Done';
+                }
+                else{
+                    $displayPrice .= "$";
+                }
                 if($key == $cell['houseLevel']){
                     $html .= '<b>';
                     $html .= $key.' => '.$displayPrice;
@@ -322,6 +362,9 @@ class Board extends GameType{
 
                 if($buyingPhase && $cell['owner'] == $playerId && $key > $cell['houseLevel']){
                     $html .= ' - <button class="buyingPhase" onclick="buyHousePrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$price.', '.$key.')">Buy</button><br>';
+                }
+                elseif($cell['owner'] == $playerId && !$buyingPhase && $key <= $cell['houseLevel']){
+                    $html .= ' - <button class="buyingPhase" onclick="sellHousePrompt('.$boardCellId.', \''.$playerId.'\', \''.addslashes($cell['name']).'\', '.$price.', '.$key.')">Sell</button><br>';
                 }
                 else 
                     $html .= '<br>';
