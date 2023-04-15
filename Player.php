@@ -20,6 +20,8 @@ class Player extends MainController{
 
     public string $id;
 
+    public $perks = array('');
+
     function generateNewPlayer($gameBoard, $playerId){
         $this->colorHEX = $this->generatePlayerColor();
         $this->pawn = $this->generatePawn($playerId);
