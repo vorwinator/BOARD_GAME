@@ -76,7 +76,8 @@ class Board extends GameType{
             'owner' => 'bank',
             'ownerNickname' => 'bank',
             'houseLevel' => 0,
-            // 'extraRules' => $this->generateCellExtraRules($boardCellId),
+            'extraRules' => $this->gameType['cells'][$boardCellId]['extraRules'],
+            'perks' => $this->gameType['cells'][$boardCellId]['perks'],
         );
     }
 
@@ -85,6 +86,7 @@ class Board extends GameType{
      * @param int $boardCellId - current cell id
      */
     function generatePurchasePrice($boardCellId){
+        if(isset($this->gameType['cells'][$boardCellId]['extraRules']['purchasePrice'])) return $this->gameType['cells'][$boardCellId]['extraRules']['purchasePrice'];
         $boardCellMultiplier = $boardCellId % $this->numberOfBoardCells == 0? 1: $boardCellId % $this->numberOfBoardCells;
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
         return $lineMultiplier * $boardCellMultiplier /90 * 5;
@@ -95,6 +97,7 @@ class Board extends GameType{
      * @param int $boardCellId - current cell id
      */
     function generateCellRentPrices($boardCellId){
+        if(isset($this->gameType['cells'][$boardCellId]['extraRules']['rentPrices'])) return $this->gameType['cells'][$boardCellId]['extraRules']['rentPrices'];
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
         for($i=0;$i<6;$i++){
             $rentPrices[$i] = $this->countRentPrice($boardCellId, $lineMultiplier, $i);
@@ -108,6 +111,7 @@ class Board extends GameType{
      * @param int $boardCellId - current cell id
      */
     function generateCellHousingPrices($boardCellId){
+        if(isset($this->gameType['cells'][$boardCellId]['extraRules']['housingPrices'])) return $this->gameType['cells'][$boardCellId]['extraRules']['housingPrices'];
         $lineMultiplier = $this->countLineMultiplier($boardCellId);
         for($i=1;$i<6;$i++){
             $housingPrices[$i] = $this->countHousingPrice($boardCellId, $lineMultiplier, $i);
@@ -294,6 +298,17 @@ class Board extends GameType{
         $player->countAccountBalance("add", $cell['purchasePrice']);
         $this->changeCellOwner('bank', $boardCellId, 'bank');
         $this->changeCellBorderColor($boardCellId, $player);
+    }
+
+    function applyPerk($type){
+        switch($type){
+            case 'activate':
+                break;
+            case 'owner':
+                break;
+            case 'onenter':
+                break;
+        }
     }
 
     /**
