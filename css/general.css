@@ -1,0 +1,24 @@
+.mainMenu{
+    width:100%;
+    display:flex;
+    justify-content:space-evenly;
+    padding-bottom: 2rem;
+}
+
+.pageContent{
+    /* display:flex; */
+}
+
+.buttonMenu{
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.failText{
+    color: red;
+}
+
+.successText{
+    color: green;
+}

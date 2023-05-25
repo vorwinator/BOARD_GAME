@@ -1,0 +1,22 @@
+.gameBoard{
+    width:100%;
+    overflow:auto;
+}
+
+.cell{
+    cursor: pointer;
+    border: black solid 3px;
+    width: 100px;
+}
+
+.board{
+    border: black solid 3px;
+}
+
+.tr{
+    border: black solid 3px;
+}
+
+#cellCenter{
+    border: black solid 3px;
+}

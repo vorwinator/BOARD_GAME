@@ -81,7 +81,7 @@ if($_REQUEST){
                 $playerId = "player_".$turnOfPlayer;
 
                 $positionBeforeRoll = $$playerId->currentPosition;
-                $_REQUEST['rollDice'] = '71,0';//debug
+                // $_REQUEST['rollDice'] = '71,0';//debug
                 $sumOfDiceRolls = Utils::sumOfDiceRolls($_REQUEST['rollDice']);
                 $numberOfLoops = intval($sumOfDiceRolls / $gameBoard->numberOfBoardCells);
                 $newPosition = $sumOfDiceRolls - $numberOfLoops * $gameBoard->numberOfBoardCells;
@@ -155,7 +155,11 @@ class MainController{
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="./board.css">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/player.css">
+    <link rel="stylesheet" href="./css/popup.css">
+    <link rel="stylesheet" href="./css/diceroll.css">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="./utils.js"></script>
 </head>
@@ -164,8 +168,8 @@ class MainController{
     <?=Utils::menuHTML();?>
     <?=Utils::popupWindowHTML();?>
     <div class="pageContent">
-        <?=$gameBoard->printBoard();?>
         <?=$main->playersDetailsHTML();?>
+        <?=$gameBoard->printBoard();?>
     </div>
 </div>
 </body>
