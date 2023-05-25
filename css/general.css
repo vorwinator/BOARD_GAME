@@ -1,3 +1,8 @@
+
+body{
+    background-color:cornsilk;
+}
+
 .mainMenu{
     width:100%;
     display:flex;
@@ -6,13 +11,14 @@
 }
 
 .pageContent{
-    /* display:flex; */
 }
 
 .buttonMenu{
     cursor: pointer;
     padding: 1rem;
     border-radius: 15px;
+    border-width: 0.2rem;
+    border-style:outset;
 }
 
 .failText{

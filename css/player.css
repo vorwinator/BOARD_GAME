@@ -11,3 +11,42 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.playersDetails{
+    width:100%;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.playerDetailsRow{
+    display:flex;
+    flex-direction: column;
+    border-bottom: solid 0.2rem;
+    width:14rem;
+    margin:auto;
+    margin-bottom:1rem;
+    border-style: ridge;
+}
+
+.playerDetailsCell{
+    padding-left: 1rem;
+    background-color: rgb(190, 190, 190);
+}
+
+.playerDetailLabel{
+    float:left;
+    width:5rem;
+}
+
+.currentTurnInfo{
+    display:flex;
+    flex-direction: column;
+    border-bottom: solid 1px;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    width:24%;
+    margin:auto;
+    margin-bottom:1rem;
+    border-style: ridge;
+}
