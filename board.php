@@ -311,6 +311,25 @@ class Board extends GameType{
         }
     }
 
+    function givePassStartBonus($player, $positionBeforeRoll, $sumOfDiceRolls, $numberOfLoops){
+        // if($$playerId->currentPosition < $positionBeforeRoll){
+        //     $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
+        // }
+        // if($sumOfDiceRolls >= $gameBoard->numberOfBoardCells){
+        //     for($i=0; $i<$numberOfLoops; $i++){
+        //         $$playerId->countAccountBalance('add',$gameBoard->passStartBonus);
+        //     }
+        // }
+        if($player->currentPosition < $positionBeforeRoll){
+            $player->countAccountBalance('add',$this->passStartBonus);
+        }
+        if($sumOfDiceRolls >= $this->numberOfBoardCells){
+            for($i=0; $i<$numberOfLoops; $i++){
+                $player->countAccountBalance('add',$this->passStartBonus);
+            }
+        }
+    }
+
     /**
      * @param int $boardCellId - current cell id
      * @return string $html - content of cell
