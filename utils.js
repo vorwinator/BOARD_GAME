@@ -231,6 +231,11 @@ function showAccountBalanceChange(mode, number, playerId) {
     }
 }
 
+function keepAllPlayersDetailsVisibility(){
+
+    if(sessionStorage.getItem("allPlayersDetailsVisibility") == "hide") showAllPlayersDetails();
+}
+
 function showAllPlayersDetails(){
     var ifhide = document.getElementById("allPlayersDetails").className
     if(ifhide == "hide"){
@@ -240,7 +245,8 @@ function showAllPlayersDetails(){
     else{
         changeClass("allPlayersDetails","hide"); 
         changeHTML("showAllPlayersDetails","&darr;Show More&darr;");
-    } 
+    }
+    sessionStorage.setItem("allPlayersDetailsVisibility", document.getElementById("allPlayersDetails").className);
 }
 
 function changeClass(id, newClass){

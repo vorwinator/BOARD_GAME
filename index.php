@@ -182,6 +182,8 @@ if(isset($_REQUEST['rollDice'])){
     echo Utils::initializeBuyingPhase(${"player_".$turnOfPlayer}, $gameBoard, "player_".$turnOfPlayer);
 }
 
+echo "<script>keepAllPlayersDetailsVisibility();</script>";
+
 $objNames = Utils::prepareArrayOfObjectsNames($main->objects);
 
 foreach($objNames as $key=>$objName){
