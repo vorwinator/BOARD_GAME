@@ -28,3 +28,7 @@ body{
 .successText{
     color: green;
 }
+
+.hide{
+    display:none;
+}

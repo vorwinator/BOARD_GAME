@@ -136,16 +136,19 @@ class MainController{
         $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->nick.'</div>';
         $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->accountBalance.'$</div>';
         $html .= '<div class="currentTurnInfo" style="'.$currentTurnStyle.'">'.$currentPlayer->currentPosition.'</div>';
-        for($i=1; $i<=$this->numberOfPlayers; $i++){
-            $player = $this->objects['player_'.$i];
+        $html .= '<button id="showAllPlayersDetails" class="currentTurnInfo" onclick=\'showAllPlayersDetails()\'>&uarr;Show Less&uarr;</button>';
+            $html .= '<div id="allPlayersDetails" class="playersDetails">';
+            for($i=1; $i<=$this->numberOfPlayers; $i++){
+                $player = $this->objects['player_'.$i];
 
-            $html .= '<div class="playerDetailsRow" style="border-bottom-color: #'.$player->colorHEX.'">';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_nick"><div class="playerDetailLabel">Nick:</div> <span>'.$player->nick.'</span></div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_money"><div class="playerDetailLabel">Money:</div> <span>'.$player->accountBalance.'</span>$</div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_position"><div class="playerDetailLabel">Position:</div> <span>'.$cells[$player->currentPosition]['name'].'</span></div>';
-                $html .= '<div class="playerDetailsCell" id="'.$player->id.'_pawn"><div class="playerDetailLabel">Pawn:</div> <span>'.$player->pawn.'</span></div>';
+                $html .= '<div class="playerDetailsRow" style="border-bottom-color: #'.$player->colorHEX.'">';
+                    $html .= '<div class="playerDetailsCell" id="'.$player->id.'_nick"><div class="playerDetailLabel">Nick:</div> <span>'.$player->nick.'</span></div>';
+                    $html .= '<div class="playerDetailsCell" id="'.$player->id.'_money"><div class="playerDetailLabel">Money:</div> <span>'.$player->accountBalance.'</span>$</div>';
+                    $html .= '<div class="playerDetailsCell" id="'.$player->id.'_position"><div class="playerDetailLabel">Position:</div> <span>'.$cells[$player->currentPosition]['name'].'</span></div>';
+                    $html .= '<div class="playerDetailsCell" id="'.$player->id.'_pawn"><div class="playerDetailLabel">Pawn:</div> <span>'.$player->pawn.'</span></div>';
+                $html .= '</div>';
+            }
             $html .= '</div>';
-        }
         $html .= '</div>';
         return $html;
     }

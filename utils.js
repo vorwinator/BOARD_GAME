@@ -231,6 +231,26 @@ function showAccountBalanceChange(mode, number, playerId) {
     }
 }
 
+function showAllPlayersDetails(){
+    var ifhide = document.getElementById("allPlayersDetails").className
+    if(ifhide == "hide"){
+        changeClass("allPlayersDetails","playersDetails"); 
+        changeHTML("showAllPlayersDetails","&uarr;Show Less&uarr;");
+    }
+    else{
+        changeClass("allPlayersDetails","hide"); 
+        changeHTML("showAllPlayersDetails","&darr;Show More&darr;");
+    } 
+}
+
+function changeClass(id, newClass){
+    document.getElementById(id).className = newClass;
+}
+
+function changeHTML(id, newHTML){
+    document.getElementById(id).innerHTML = newHTML;
+}
+
 window.onclick = function(event) {
     var popup = document.getElementById("popup");
     var buyingPhase = document.getElementsByClassName("buyingPhase").length;
