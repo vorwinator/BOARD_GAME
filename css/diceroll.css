@@ -1,6 +1,6 @@
 
 .dice{
-    margin-left: 300px; /*temporary*/
+    margin: auto;
     width:100px;
     height:100px;
     position: relative;
@@ -133,4 +133,5 @@
 
 .popupDices{
     display:flex;
+    flex-wrap: wrap;
 }

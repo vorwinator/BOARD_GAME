@@ -76,7 +76,7 @@ async function showRollDice(numberOfDices, popupContent, popup) {
             turnPopupBackgroundInvisible();
             // jQuery(".popupContent").css("background", (255, 255, 255, 0));
             // jQuery(".popupContent").css("border", "none");
-            jQuery(".popupDices").css("padding-left", "25%");
+            // jQuery(".popupDices").css("padding-left", "25%");
             popup.style.display = "block";
             const result = [];
             for (let i = 0; i < numberOfDices; i++){
